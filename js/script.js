@@ -1,12 +1,9 @@
 
 // start game button
 // message text div
-// function will add onto the array after every players (winning) turn with another random key
 // make a losing screen if key was pressed incorrectly or not fast enough
 // make play again button
 // function to reset all state to default
-// make a winning condition after a certain amount of turns
-// winning screen
 
 /*----- constants -----*/
 const keyboard = {
@@ -49,33 +46,34 @@ const keyEls = document.querySelectorAll('.key')
 /*----- event listeners -----*/
 keyEls.forEach((keyEl) => {
     keyEl.addEventListener('click', () => {
-        const key = keyEl.id;
+        const key = keyEl.id
         playerKeyPressArray.push(key)
         const keyInfo = keyboard[key]
-        handleKeyColor(keyInfo);
+        keyInfo.active = true
+        handleKeyColor(keyInfo)
         setTimeout(() => {
-            checkWinProgress();   
-            keyInfo.active = false;    
-        }, 200);
+            checkWinProgress()   
+            keyInfo.active = false    
+        }, 200)
         console.log(`Clicked key: ${key}`)
     })
 })
 
-document.addEventListener('keydown', handleKeyPress);
+document.addEventListener('keydown', handleKeyPress)
 
 /*----- functions -----*/
 function handleKeyPress(event) {
-    const key = event.key;
+    const key = event.key
     if (keyboard.hasOwnProperty(key)) {
         playerKeyPressArray.push(key)
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
         setTimeout(() => {
-            // handleKeyColor(keyInfo);
-            checkWinProgress();
-            keyInfo.active = false;
-        }, 200);
+            // handleKeyColor(keyInfo)
+            checkWinProgress()
+            keyInfo.active = false
+        }, 200)
         console.log(`Pressed key: ${key}`)
     }
 }
@@ -107,6 +105,8 @@ function checkWinProgress() {
     for (let i = 0; i < playerKeyPressArray.length; i++) {
         if (playerKeyPressArray[i] !== partialPattern[i]) {
             console.log('YOU LOSE!')
+            // make loser function to change dom to red/locked keys and display loser message and play again
+            // make a high score message that shows your highest level you reached
             return
         }
     }
@@ -139,11 +139,11 @@ function playKeyPattern() {
             handleKeyColor(keyInfo)
             i++
             if (i < keyPatternArray.length) {
-                setTimeout(playNextKey, 200)
+                setTimeout(playNextKey, 350)
             } else {
                 // playerTurn()
             }
-        }, 200)
+        }, 350)
     }
     playNextKey()
 }
