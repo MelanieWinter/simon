@@ -1,10 +1,6 @@
 
-// start game button
 // message text div
 // make a losing screen if key was pressed incorrectly or not fast enough
-// make play again button
-// function to reset all state to default
-// add sounds
 
 /*----- constants -----*/
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -49,9 +45,21 @@ let userInteractionEnabled = true
 const keyEls = document.querySelectorAll('.key')
 const keyboardEl = document.getElementById('keyboardContainer')
 const startButton = document.getElementById('startButton')
+const levelButton = document.getElementById('levelButton')
+const resetButton = document.getElementById('resetButton')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', startGame)
+
+levelButton.addEventListener('click', () => {
+    levelButton.classList.add('hidden')
+    leveler()
+})
+
+resetButton.addEventListener('click', () => {
+    resetButton.classList.add('hidden')
+    resetGame()
+})
 
 keyEls.forEach((keyEl) => {
     keyEl.addEventListener('click', () => {
@@ -83,7 +91,6 @@ function handleKeyPress(event) {
         handleKeyColor(keyInfo)
         handleKeyTone(keyInfo)
         setTimeout(() => {
-            // handleKeyColor(keyInfo)
             checkWinProgress()
             keyInfo.active = false
         }, 200)
@@ -125,6 +132,8 @@ function checkWinProgress() {
     for (let i = 0; i < playerKeyPressArray.length; i++) {
         if (playerKeyPressArray[i] !== partialPattern[i]) {
             console.log('YOU LOSE!')
+            userInteractionEnabled = false
+            playAgain()
             // make loser function to change dom to red/locked keys and display loser message and play again
             // make a high score message that shows your highest level you reached
             return
@@ -133,10 +142,17 @@ function checkWinProgress() {
 
     if (playerKeyPressArray.length === keyPatternArray.length) {
         console.log('YOU WIN!')
-        setTimeout(() => {
-            leveler()
-        }, 1000)
+        userInteractionEnabled = false
+        nextLevel()
     }
+}
+
+function playAgain() {
+    resetButton.classList.remove('hidden')
+}
+
+function nextLevel() {
+    levelButton.classList.remove('hidden')
 }
 
 function leveler() {
@@ -144,13 +160,14 @@ function leveler() {
     playerKeyPressArray = []
     pickRandomKey(keyboard)
     playKeyPattern()
+    userInteractionEnabled = false
 }
 
 function playKeyPattern() {
-    // computerTurn()?
+    computerTurn()
     let i = 0
     function playNextKey() {
-        computerTurn()
+        // computerTurn()
         const key = keyPatternArray[i]
         const keyInfo = keyboard[key]
         keyInfo.active = true
@@ -178,6 +195,7 @@ function playerTurn() {
 
 function computerTurn() {
     userInteractionEnabled = false
+    levelButton.classList.add('hidden')
     //display message
 }
 
@@ -194,6 +212,22 @@ function startGame() {
     render()
     setTimeout(leveler, 500)
 }
+
+
+// add button for reset when you lose
+// add menu with reset button to reset at any time
+function resetGame() {
+    level = 0
+    keyPatternArray = []
+    render()
+    setTimeout(leveler, 500)
+    // init()
+}
+
+// function init() {
+//     startButton.classList.remove('hidden')
+//     keyboardEl.classList.add('hidden')
+// }
 
 function render() {
     startButton.classList.add('hidden')
