@@ -4,6 +4,7 @@
 // make a losing screen if key was pressed incorrectly or not fast enough
 // make play again button
 // function to reset all state to default
+// add sounds
 
 /*----- constants -----*/
 const keyboard = {
@@ -152,5 +153,22 @@ function playerTurn() {
     // unlock keys
     // display message
 }
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext()
+
+function playTone(frequency, duration) {
+    const oscillator = audioContext.createOscillator()
+    oscillator.type = 'sine'
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
+    oscillator.connect(audioContext.destination)
+    oscillator.start()
+    oscillator.stop(audioContext.currentTime + duration)
+}
+
+// Play a 440 Hz tone for 1 second
+// playTone(70, .3)
+// 70-320 in increments of 10
+
 
 leveler()
