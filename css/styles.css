@@ -35,7 +35,6 @@ main {
 }
 
 .message {
-    align-self: flex-start;
     text-align: center;
     font-size: 1.5em;
     font-weight: 200;
@@ -58,11 +57,10 @@ main {
 .button-container {
     height: 15vmin;
     width: 30vmin;
-    margin-bottom: 10vmin;
+    margin-bottom: 50vmin;
 }
 
 .start-button {
-    margin-bottom: 40vmin;
     height: 10vmin;
     width: 20vmin;
     border: 1px solid white; 

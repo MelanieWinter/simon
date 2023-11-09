@@ -1,6 +1,8 @@
 
-// message text div
-// make a losing screen if key was pressed incorrectly or not fast enough
+// make hamburger menu on top right of screen with drop down
+// how to play, reset game
+// your high score
+// sfx controls
 
 /*----- constants -----*/
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -36,7 +38,7 @@ const keyboard = {
 }
 
 /*----- state variables -----*/
-let level = 0
+let level = 2
 let keyPatternArray = []
 let playerKeyPressArray = []
 let userInteractionEnabled = true
@@ -44,15 +46,23 @@ let userInteractionEnabled = true
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
 const keyboardEl = document.getElementById('keyboardContainer')
+const messageEl = document.getElementById('message')
+const buttonEl = document.getElementById('buttonContainer')
 const startButton = document.getElementById('startButton')
 const levelButton = document.getElementById('levelButton')
 const resetButton = document.getElementById('resetButton')
+const levelNumber = document.getElementById('levelNumber')
 
 /*----- event listeners -----*/
-startButton.addEventListener('click', startGame)
+startButton.addEventListener('click', () => {
+    buttonEl.style.marginBottom = '10vmin'
+    messageEl.innerText = 'Watch the sequence . . .'
+    startGame()
+})
 
 levelButton.addEventListener('click', () => {
     levelButton.classList.add('hidden')
+    levelNumber.innerText = level
     leveler()
 })
 
@@ -133,6 +143,7 @@ function checkWinProgress() {
         if (playerKeyPressArray[i] !== partialPattern[i]) {
             console.log('YOU LOSE!')
             userInteractionEnabled = false
+            losingMessage()
             playAgain()
             // make loser function to change dom to red/locked keys and display loser message and play again
             // make a high score message that shows your highest level you reached
@@ -153,6 +164,7 @@ function playAgain() {
 
 function nextLevel() {
     levelButton.classList.remove('hidden')
+    messageEl.innerText = 'Would you like to proceed?'
 }
 
 function leveler() {
@@ -160,6 +172,7 @@ function leveler() {
     playerKeyPressArray = []
     pickRandomKey(keyboard)
     playKeyPattern()
+    randomMessage()
     userInteractionEnabled = false
 }
 
@@ -217,7 +230,7 @@ function startGame() {
 // add button for reset when you lose
 // add menu with reset button to reset at any time
 function resetGame() {
-    level = 0
+    level = 2
     keyPatternArray = []
     render()
     setTimeout(leveler, 500)
@@ -232,4 +245,14 @@ function resetGame() {
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
+    messageEl.innerText = 'Watch the sequence . . .'
+    levelNumber.innerText = level
+}
+
+function randomMessage() {
+
+}
+
+function losingMessage() {
+    messageEl.innerText = 'YOU LOST! \nWanna try again?'
 }
