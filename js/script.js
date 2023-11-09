@@ -1,10 +1,6 @@
 
 // start game button
 // message text div
-
-// make :active css for each div. make it work when it is accessed through keypress
-// function to push key pressed into an array
-// function to check if patter array and keypress array are the same
 // function will add onto the array after every players (winning) turn with another random key
 // make a losing screen if key was pressed incorrectly or not fast enough
 // make play again button
@@ -56,9 +52,11 @@ keyEls.forEach((keyEl) => {
         const key = keyEl.id;
         playerKeyPressArray.push(key)
         const keyInfo = keyboard[key]
-        keyInfo.active = true
-        handleKeyColor(keyInfo)
-        setTimeout(() => {keyInfo.active = false}, 200)
+        handleKeyColor(keyInfo);
+        setTimeout(() => {
+            checkWinProgress();   
+            keyInfo.active = false;    
+        }, 200);
         console.log(`Clicked key: ${key}`)
     })
 })
@@ -73,7 +71,11 @@ function handleKeyPress(event) {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
-        setTimeout(() => {keyInfo.active = false}, 200)
+        setTimeout(() => {
+            // handleKeyColor(keyInfo);
+            checkWinProgress();
+            keyInfo.active = false;
+        }, 200);
         console.log(`Pressed key: ${key}`)
     }
 }
@@ -99,25 +101,56 @@ function pickRandomKey() {
     return randomKey
 }
 
-const randomKey = pickRandomKey(keyboard)
-console.log(`Random key: ${randomKey}`)
-console.log(keyPatternArray)
-
-function checkWin() {
-    if (playerKeyPressArray.length !== keyPatternArray.length) {
-        console.log('YOU LOSE!')
-        return
-    }
-
+function checkWinProgress() {
+    const partialPattern = keyPatternArray.slice(0, playerKeyPressArray.length)
+    
     for (let i = 0; i < playerKeyPressArray.length; i++) {
-        if (playerKeyPressArray[i] !== keyPatternArray[i]) {
+        if (playerKeyPressArray[i] !== partialPattern[i]) {
             console.log('YOU LOSE!')
             return
         }
     }
-    console.log('YOU WIN')
+
+    if (playerKeyPressArray.length === keyPatternArray.length) {
+        console.log('YOU WIN!')
+        setTimeout(() => {
+            leveler()
+        }, 1000)
+    }
 }
 
+function leveler() {
+    level++
+    playerKeyPressArray = []
+    pickRandomKey(keyboard)
+    playKeyPattern()
+}
 
+function playKeyPattern() {
+    //lock keys until sequence is done
+    let i = 0
+    function playNextKey() {
+        const key = keyPatternArray[i]
+        const keyInfo = keyboard[key]
+        keyInfo.active = true
+        handleKeyColor(keyInfo)
+        setTimeout(() => {
+            keyInfo.active = false
+            handleKeyColor(keyInfo)
+            i++
+            if (i < keyPatternArray.length) {
+                setTimeout(playNextKey, 200)
+            } else {
+                // playerTurn()
+            }
+        }, 200)
+    }
+    playNextKey()
+}
 
+function playerTurn() {
+    // unlock keys
+    // display message
+}
 
+leveler()
