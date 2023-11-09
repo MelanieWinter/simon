@@ -22,8 +22,40 @@ header > h1 {
     font-weight: 400;
 }
 
+.start-button {
+    margin-top: 50vmin;
+    height: 10vmin;
+    width: 20vmin;
+    border: 1px solid white; 
+    border-radius: 10%;
+    background-color: transparent;
+    color: white;
+    position: relative;
+}
+
+.start-button:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(251, 251, 251, 0.374);
+    filter: blur(15px);
+    border-radius: 10%;
+    z-index: -1;
+}
+
+.start-button:hover {
+    border: 2px solid white;
+    font-weight: 700;
+    cursor: pointer;
+    transform: scale(0.95);
+    transition: transform 25ms ease-in;
+}
+
 .keyboard-container {
-    margin-top:  40vmin;
+    margin-top:  10vmin;
 }
 
 .keyboard-row-1 {
@@ -81,6 +113,10 @@ header > h1 {
     cursor: pointer;
     transform: scale(0.95);
     transition: transform 25ms ease-in;
+}
+
+.hidden {
+    display: none
 }
 
 .flex-ctr {

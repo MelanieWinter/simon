@@ -11,32 +11,32 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext()
 
 const keyboard = {
-    q: { label: 'Q', color: 'darksalmon', tone: 50, active: false},
-    w: { label: 'W', color: 'bisque', tone: 60, active: false },
-    e: { label: 'E', color: 'skyblue', tone: 70, active: false }, 
-    r: { label: 'R', color: 'violet', tone: 80, active: false },
-    t: { label: 'T', color: 'hotpink', tone: 90, active: false },
-    y: { label: 'Y', color: 'darkorange', tone: 100, active: false },
-    u: { label: 'U', color: 'gold', tone: 110, active: false },
-    i: { label: 'I', color: 'turquoise', tone: 120, active: false },
-    o: { label: 'O', color: 'cornflowerblue', tone: 130, active: false },
-    p: { label: 'P', color: 'palevioletred', tone: 140, active: false },
-    a: { label: 'A', color: 'limegreen', tone: 150, active: false },
-    s: { label: 'S', color: 'deepskyblue', tone: 160, active: false },
-    d: { label: 'D', color: 'dodgerblue', tone: 170, active: false },
-    f: { label: 'F', color: 'deeppink', tone: 180, active: false },
-    g: { label: 'G', color: 'red', tone: 190, active: false },
-    h: { label: 'H', color: 'seagreen', tone: 200, active: false },
-    j: { label: 'J', color: 'blue', tone: 210, active: false },
-    k: { label: 'K', color: 'darkviolet', tone: 220, active: false },
-    l: { label: 'L', color: 'crimson', tone: 230, active: false },
-    z: { label: 'Z', color: 'purple', tone: 240, active: false },
-    x: { label: 'X', color: 'navy', tone: 250, active: false },
-    c: { label: 'C', color: 'green', tone: 260, active: false },
-    v: { label: 'V', color: 'chocolate', tone: 270, active: false },
-    b: { label: 'B', color: 'steelblue', tone: 280, active: false },
-    n: { label: 'N', color: 'tomato', tone: 290, active: false },
-    m: { label: 'M', color: 'rebeccapurple', tone: 300, active: false },
+    q: { label: 'Q', color: 'darksalmon', tone: 100, active: false},
+    w: { label: 'W', color: 'bisque', tone: 110, active: false },
+    e: { label: 'E', color: 'skyblue', tone: 120, active: false }, 
+    r: { label: 'R', color: 'violet', tone: 130, active: false },
+    t: { label: 'T', color: 'hotpink', tone: 140, active: false },
+    y: { label: 'Y', color: 'darkorange', tone: 150, active: false },
+    u: { label: 'U', color: 'gold', tone: 160, active: false },
+    i: { label: 'I', color: 'turquoise', tone: 170, active: false },
+    o: { label: 'O', color: 'cornflowerblue', tone: 180, active: false },
+    p: { label: 'P', color: 'palevioletred', tone: 190, active: false },
+    a: { label: 'A', color: 'limegreen', tone: 200, active: false },
+    s: { label: 'S', color: 'deepskyblue', tone: 210, active: false },
+    d: { label: 'D', color: 'dodgerblue', tone: 220, active: false },
+    f: { label: 'F', color: 'deeppink', tone: 230, active: false },
+    g: { label: 'G', color: 'red', tone: 240, active: false },
+    h: { label: 'H', color: 'seagreen', tone: 250, active: false },
+    j: { label: 'J', color: 'blue', tone: 260, active: false },
+    k: { label: 'K', color: 'darkviolet', tone: 270, active: false },
+    l: { label: 'L', color: 'crimson', tone: 280, active: false },
+    z: { label: 'Z', color: 'purple', tone: 290, active: false },
+    x: { label: 'X', color: 'navy', tone: 300, active: false },
+    c: { label: 'C', color: 'green', tone: 310, active: false },
+    v: { label: 'V', color: 'chocolate', tone: 320, active: false },
+    b: { label: 'B', color: 'steelblue', tone: 330, active: false },
+    n: { label: 'N', color: 'tomato', tone: 340, active: false },
+    m: { label: 'M', color: 'rebeccapurple', tone: 350, active: false },
 }
 
 /*----- state variables -----*/
@@ -46,8 +46,11 @@ let playerKeyPressArray = []
 
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
+const startButton = document.getElementById('startButton')
 
 /*----- event listeners -----*/
+startButton.addEventListener('click', startGame)
+
 keyEls.forEach((keyEl) => {
     keyEl.addEventListener('click', () => {
         const key = keyEl.id
@@ -97,6 +100,9 @@ function handleKeyColor(keyInfo) {
 }
 
 function handleKeyTone(keyInfo) {
+    // make a sfx on/off button which will make this run or not 
+    // if sfx is off return
+    // else run this function
     const keyEl = document.getElementById(keyInfo.label.toLowerCase())
     playTone(keyInfo.tone,0.15)
 }
@@ -173,7 +179,12 @@ function playTone(frequency, duration) {
     oscillator.stop(audioContext.currentTime + duration)
 }
 
-// Play a 440 Hz tone for 1 second
-// playTone(70, .3)
+function startGame() {
+    render()
+    leveler() // set timeout 500ms?
+}
 
-leveler()
+function render() {
+    // hide start button
+    // show keyboard
+}
