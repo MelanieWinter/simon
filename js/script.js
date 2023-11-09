@@ -58,7 +58,7 @@ keyEls.forEach((keyEl) => {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
-        handleKeyColor(key)
+        setTimeout(() => {keyInfo.active = false}, 200)
         console.log(`Clicked key: ${key}`)
     })
 })
@@ -73,6 +73,7 @@ function handleKeyPress(event) {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
+        setTimeout(() => {keyInfo.active = false}, 200)
         console.log(`Pressed key: ${key}`)
     }
 }
@@ -83,7 +84,6 @@ function handleKeyColor(keyInfo) {
         keyEl.style.backgroundColor = keyInfo.color
         keyEl.classList.add('active')
         setTimeout(() => {
-            keyInfo.active = false
             keyEl.style.backgroundColor = ''
             keyEl.classList.remove('active')
         }, 200)
@@ -92,7 +92,7 @@ function handleKeyColor(keyInfo) {
 }
 
 function pickRandomKey() {
-    const keys = Object.keys(keyboard);
+    const keys = Object.keys(keyboard)
     const randomIndex = Math.floor(Math.random() * keys.length)
     const randomKey = keys[randomIndex]
     keyPatternArray.push(randomKey)
