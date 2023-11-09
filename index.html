@@ -12,17 +12,28 @@
 </head>
 <body class="">
     
-    <header class="flex-ctr">
-        <h1>SIMON</h1>
+    <header class="">
+        <h1>S I M O N</h1>
     </header>
 
     <nav></nav>
 
     <main>
         <div class="message-container flex-ctr">
-            <button id="startButton" class="start-button">Start Game</button>
-            <button id="levelButton" class="level-button hidden">Next Level</button>
-            <button id="resetButton" class="reset-button hidden">Restart Game</button>
+
+            <div id="message" class="message">
+                Welcome to SIMON!
+                <br>Follow the sequence and see how far you can go
+            </div>
+
+            <div id="buttonContainer" class="button-container flex-ctr">
+                <button id="startButton" class="start-button">Start Game</button>
+                <button id="levelButton" class="level-button hidden">Proceed to level: 
+                    <span id="levelNumber">0</span>
+                </button>
+                <button id="resetButton" class="reset-button hidden">Restart Game</button>
+            </div>
+
         </div>
 
         <div id="keyboardContainer" class="keyboard-container hidden">  

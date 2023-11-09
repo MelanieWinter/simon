@@ -17,7 +17,7 @@ body {
 }
 
 header > h1 {
-    margin-top: 5vmin;
+    margin-left: 2vmin;
     font-size: 5em;
     font-weight: 400;
 }
@@ -34,8 +34,35 @@ main {
     flex-direction: column;
 }
 
+.message {
+    align-self: flex-start;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 200;
+    position: relative;
+}
+
+.message:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(251, 251, 251, 0.153);
+    filter: blur(15px);
+    border-radius: 100%;
+    z-index: -1;
+}
+
+.button-container {
+    height: 15vmin;
+    width: 30vmin;
+    margin-bottom: 10vmin;
+}
+
 .start-button {
-    margin-bottom: 30vmin;
+    margin-bottom: 40vmin;
     height: 10vmin;
     width: 20vmin;
     border: 1px solid white; 
@@ -67,7 +94,6 @@ main {
 }
 
 .level-button {
-    margin-bottom: 10vmin;
     height: 8vmin;
     width: 15vmin;
     border: 1px solid white; 
@@ -99,7 +125,7 @@ main {
 }
 
 .reset-button {
-    margin-bottom: 10vmin;
+
     height: 8vmin;
     width: 15vmin;
     border: 1px solid white; 
@@ -131,7 +157,7 @@ main {
 }
 
 .keyboard-container {
-    margin-bottom: 5vmin;
+    margin-bottom: 7vmin;
     /* margin-top:  10vmin; */
 }
 
