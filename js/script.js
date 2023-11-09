@@ -7,6 +7,9 @@
 // add sounds
 
 /*----- constants -----*/
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext()
+
 const keyboard = {
     q: { label: 'Q', color: 'darksalmon', tone: 50, active: false},
     w: { label: 'W', color: 'bisque', tone: 60, active: false },
@@ -52,6 +55,7 @@ keyEls.forEach((keyEl) => {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
+        handleKeyTone(keyInfo)
         setTimeout(() => {
             checkWinProgress()   
             keyInfo.active = false    
@@ -70,6 +74,7 @@ function handleKeyPress(event) {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
+        handleKeyTone(keyInfo)
         setTimeout(() => {
             // handleKeyColor(keyInfo)
             checkWinProgress()
@@ -88,8 +93,12 @@ function handleKeyColor(keyInfo) {
             keyEl.style.backgroundColor = ''
             keyEl.classList.remove('active')
         }, 200)
-
     }
+}
+
+function handleKeyTone(keyInfo) {
+    const keyEl = document.getElementById(keyInfo.label.toLowerCase())
+    playTone(keyInfo.tone,0.15)
 }
 
 function pickRandomKey() {
@@ -135,9 +144,10 @@ function playKeyPattern() {
         const keyInfo = keyboard[key]
         keyInfo.active = true
         handleKeyColor(keyInfo)
+        handleKeyTone(keyInfo)
         setTimeout(() => {
             keyInfo.active = false
-            handleKeyColor(keyInfo)
+            // handleKeyColor(keyInfo)
             i++
             if (i < keyPatternArray.length) {
                 setTimeout(playNextKey, 350)
@@ -154,9 +164,6 @@ function playerTurn() {
     // display message
 }
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext()
-
 function playTone(frequency, duration) {
     const oscillator = audioContext.createOscillator()
     oscillator.type = 'sine'
@@ -168,7 +175,5 @@ function playTone(frequency, duration) {
 
 // Play a 440 Hz tone for 1 second
 // playTone(70, .3)
-// 70-320 in increments of 10
-
 
 leveler()
