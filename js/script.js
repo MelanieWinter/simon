@@ -43,9 +43,11 @@ const keyboard = {
 let level = 0
 let keyPatternArray = []
 let playerKeyPressArray = []
+let userInteractionEnabled = true
 
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
+const keyboardEl = document.getElementById('keyboardContainer')
 const startButton = document.getElementById('startButton')
 
 /*----- event listeners -----*/
@@ -53,17 +55,19 @@ startButton.addEventListener('click', startGame)
 
 keyEls.forEach((keyEl) => {
     keyEl.addEventListener('click', () => {
-        const key = keyEl.id
-        playerKeyPressArray.push(key)
-        const keyInfo = keyboard[key]
-        keyInfo.active = true
-        handleKeyColor(keyInfo)
-        handleKeyTone(keyInfo)
-        setTimeout(() => {
-            checkWinProgress()   
-            keyInfo.active = false    
-        }, 200)
-        console.log(`Clicked key: ${key}`)
+        if (userInteractionEnabled) { 
+            const key = keyEl.id
+            playerKeyPressArray.push(key)
+            const keyInfo = keyboard[key]
+            keyInfo.active = true
+            handleKeyColor(keyInfo)
+            handleKeyTone(keyInfo)
+            setTimeout(() => {
+                checkWinProgress()   
+                keyInfo.active = false    
+            }, 200)
+            console.log(`Clicked key: ${key}`)
+        }
     })
 })
 
@@ -72,7 +76,7 @@ document.addEventListener('keydown', handleKeyPress)
 /*----- functions -----*/
 function handleKeyPress(event) {
     const key = event.key
-    if (keyboard.hasOwnProperty(key)) {
+    if (keyboard.hasOwnProperty(key) && userInteractionEnabled) {
         playerKeyPressArray.push(key)
         const keyInfo = keyboard[key]
         keyInfo.active = true
@@ -143,9 +147,10 @@ function leveler() {
 }
 
 function playKeyPattern() {
-    //lock keys until sequence is done
+    // computerTurn()?
     let i = 0
     function playNextKey() {
+        computerTurn()
         const key = keyPatternArray[i]
         const keyInfo = keyboard[key]
         keyInfo.active = true
@@ -153,12 +158,11 @@ function playKeyPattern() {
         handleKeyTone(keyInfo)
         setTimeout(() => {
             keyInfo.active = false
-            // handleKeyColor(keyInfo)
             i++
             if (i < keyPatternArray.length) {
                 setTimeout(playNextKey, 350)
             } else {
-                // playerTurn()
+                playerTurn()
             }
         }, 350)
     }
@@ -166,8 +170,15 @@ function playKeyPattern() {
 }
 
 function playerTurn() {
-    // unlock keys
+    setTimeout(() => {
+        userInteractionEnabled = true
+    }, 350)
     // display message
+}
+
+function computerTurn() {
+    userInteractionEnabled = false
+    //display message
 }
 
 function playTone(frequency, duration) {
@@ -181,10 +192,10 @@ function playTone(frequency, duration) {
 
 function startGame() {
     render()
-    leveler() // set timeout 500ms?
+    setTimeout(leveler, 500)
 }
 
 function render() {
-    // hide start button
-    // show keyboard
+    startButton.classList.add('hidden')
+    keyboardEl.classList.remove('hidden')
 }
