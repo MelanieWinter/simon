@@ -51,6 +51,8 @@ const computerMessages = [
     'I think I got you on this one . . .',
     'Concentrate!!!',
     'Stop reading this and look at the board!',
+    'My turn . . .',
+    'Try this one out!',
 ]
 
 /*----- state variables -----*/
@@ -110,19 +112,7 @@ document.addEventListener('keydown', (event) => {
 
 keyEls.forEach((keyEl) => {
     keyEl.addEventListener('click', () => {
-        if (userInteractionEnabled) { 
-            const key = keyEl.id
-            playerKeyPressArray.push(key)
-            const keyInfo = keyboard[key]
-            keyInfo.active = true
-            handleKeyColor(keyInfo)
-            handleKeyTone(keyInfo)
-            setTimeout(() => {
-                checkWinProgress()   
-                keyInfo.active = false    
-            }, 200)
-            console.log(`Clicked key: ${key}`)
-        }
+        handleKeyPress({ key: keyEl.id })
     })
 })
 
@@ -130,7 +120,7 @@ document.addEventListener('keydown', handleKeyPress)
 
 /*----- functions -----*/
 function handleKeyPress(event) {
-    const key = event.key
+    const key = event.key || event.target.id
     if (keyboard.hasOwnProperty(key) && userInteractionEnabled) {
         playerKeyPressArray.push(key)
         const keyInfo = keyboard[key]
@@ -141,8 +131,78 @@ function handleKeyPress(event) {
             checkWinProgress()
             keyInfo.active = false
         }, 200)
-        console.log(`Pressed key: ${key}`)
     }
+}
+
+function pickRandomKey() {
+    const keys = Object.keys(keyboard)
+    const randomIndex = Math.floor(Math.random() * keys.length)
+    const randomKey = keys[randomIndex]
+    keyPatternArray.push(randomKey)
+    return randomKey
+}
+
+function checkWinProgress() {
+    const partialPattern = keyPatternArray.slice(0, playerKeyPressArray.length)
+    
+    for (let i = 0; i < playerKeyPressArray.length; i++) {
+        if (playerKeyPressArray[i] !== partialPattern[i]) {
+            userInteractionEnabled = false
+            losingMessage()
+            playAgain()
+            return
+        }
+    }
+    if (playerKeyPressArray.length === keyPatternArray.length) {
+        userInteractionEnabled = false
+        nextLevel()
+    }
+}
+
+function leveler() {
+    level++
+    playerKeyPressArray = []
+    pickRandomKey(keyboard)
+    setTimeout(() => {playKeyPattern()}, 500)
+    getRandomMessage()
+    userInteractionEnabled = false
+}
+
+function playKeyPattern() {
+    computerTurn()
+    let i = 0
+    function playNextKey() {
+        const key = keyPatternArray[i]
+        const keyInfo = keyboard[key]
+        keyInfo.active = true
+        handleKeyColor(keyInfo)
+        handleKeyTone(keyInfo)
+        setTimeout(() => {
+            keyInfo.active = false
+            i++
+            if (i < keyPatternArray.length) {
+                setTimeout(playNextKey, 350)
+            } else {
+                setTimeout(() => {
+                    userInteractionEnabled = true
+                }, 200)
+                playerTurn()
+            }
+        }, 350)
+    }
+    playNextKey()
+}
+
+function resetGame() {
+    level = 2
+    keyPatternArray = []
+    render()
+    setTimeout(leveler, 500)
+}
+
+function getRandomMessage() {
+    const randomMessage = computerMessages[Math.floor(Math.random() * computerMessages.length)]
+    handleMessage(randomMessage)
 }
 
 function handleKeyColor(keyInfo) {
@@ -181,37 +241,6 @@ function handleStartButton() {
     buttonEl.style.marginBottom = '10vmin'
 }
 
-function pickRandomKey() {
-    const keys = Object.keys(keyboard)
-    const randomIndex = Math.floor(Math.random() * keys.length)
-    const randomKey = keys[randomIndex]
-    keyPatternArray.push(randomKey)
-    return randomKey
-}
-
-function checkWinProgress() {
-    const partialPattern = keyPatternArray.slice(0, playerKeyPressArray.length)
-    
-    for (let i = 0; i < playerKeyPressArray.length; i++) {
-        if (playerKeyPressArray[i] !== partialPattern[i]) {
-            console.log('YOU LOSE!')
-            userInteractionEnabled = false
-            losingMessage()
-            playAgain()
-            return
-        }
-    }
-    if (playerKeyPressArray.length === keyPatternArray.length) {
-        console.log('YOU WIN!')
-        userInteractionEnabled = false
-        nextLevel()
-    }
-}
-
-function playAgain() {
-    resetButton.classList.remove('hidden')
-}
-
 function nextLevel() {
     levelButton.classList.remove('hidden')
     messageEl.innerText = 'Would you like to proceed?'
@@ -221,40 +250,6 @@ function nextLevel() {
         key.style.border =  '3px solid lime'
         key.style.color = 'lime'
     }
-}
-
-function leveler() {
-    level++
-    playerKeyPressArray = []
-    pickRandomKey(keyboard)
-    setTimeout(() => {playKeyPattern()}, 500)
-    getRandomMessage()
-    userInteractionEnabled = false
-}
-
-function playKeyPattern() {
-    computerTurn()
-    let i = 0
-    function playNextKey() {
-        const key = keyPatternArray[i]
-        const keyInfo = keyboard[key]
-        keyInfo.active = true
-        handleKeyColor(keyInfo)
-        handleKeyTone(keyInfo)
-        setTimeout(() => {
-            keyInfo.active = false
-            i++
-            if (i < keyPatternArray.length) {
-                setTimeout(playNextKey, 350)
-            } else {
-                setTimeout(() => {
-                    userInteractionEnabled = true
-                }, 200)
-                playerTurn()
-            }
-        }, 350)
-    }
-    playNextKey()
 }
 
 function playerTurn() {
@@ -275,11 +270,18 @@ function playTone(frequency, duration) {
     oscillator.stop(audioContext.currentTime + duration)
 }
 
-function resetGame() {
-    level = 2
-    keyPatternArray = []
-    render()
-    setTimeout(leveler, 500)
+function playAgain() {
+    resetButton.classList.remove('hidden')
+}
+
+function losingMessage() {
+    messageEl.innerText = 'YOU LOST! \nWanna try again?'
+    for (let i = 0; i < keyEls.length; i++) {
+        const key = keyEls[i];
+        key.style.backgroundColor = 'hsla(0, 100%, 50%, 0.409)';
+        key.style.border =  '3px solid red'
+        key.style.color = 'red'
+    }
 }
 
 function render() {
@@ -294,22 +296,6 @@ function render() {
     }
 }
 
-function getRandomMessage() {
-    const randomMessage = computerMessages[Math.floor(Math.random() * computerMessages.length)]
-    handleMessage(randomMessage)
-}
-
 function handleMessage(message) {
     messageEl.innerText = message
 }
-
-function losingMessage() {
-    messageEl.innerText = 'YOU LOST! \nWanna try again?'
-    for (let i = 0; i < keyEls.length; i++) {
-        const key = keyEls[i];
-        key.style.backgroundColor = 'hsla(0, 100%, 50%, 0.409)';
-        key.style.border =  '3px solid red'
-        key.style.color = 'red'
-    }
-}
-
