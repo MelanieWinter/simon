@@ -13,14 +13,33 @@
 <body class="">
     
     <header class="">
-        <h1>S I M O N</h1>
+        <h1 class="primary-logo">S I M O N</h1>
+
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
 
         <nav>
-            <ul>
-                <li>How To Play</li>
-                <li>SFX Controls</li>
-                <li>Reset Game</li>
-                <li>High Score</li>
+            <ul id="primary-navigation" data-visible="false" class="primary-navigation">
+                <li>
+                    <a href="">
+                        <span aria-hidden="true">00</span>How To Play
+                    </a>
+                    
+                </li>
+                <li>
+                    <a href="">
+                        <span aria-hidden="true">01</span>SFX Controls
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span aria-hidden="true">02</span>Reset Game
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span aria-hidden="true">03</span>High Score
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>

@@ -70,6 +70,8 @@ const startButton = document.getElementById('startButton')
 const levelButton = document.getElementById('levelButton')
 const resetButton = document.getElementById('resetButton')
 const levelNumber = document.getElementById('levelNumber')
+const primaryNavigation = document.querySelector('.primary-navigation')
+const navigationToggle = document.querySelector('.mobile-nav-toggle')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
@@ -225,12 +227,12 @@ function handleKeyTone(keyInfo) {
 function handleLevelButton() {
     levelButton.classList.add('hidden')
     levelNumber.innerText = level
-    for (let i = 0; i < keyEls.length; i++) {
-        const key = keyEls[i];
-        key.style.backgroundColor = '';
-        key.style.border =  '3px solid white'
-        key.style.color = 'white'
-    }
+    // for (let i = 0; i < keyEls.length; i++) {
+    //     const key = keyEls[i];
+    //     key.style.backgroundColor = '';
+    //     key.style.border =  '3px solid white'
+    //     key.style.color = 'white'
+    // }
 }
 
 function handleResetButton() {
@@ -244,12 +246,12 @@ function handleStartButton() {
 function nextLevel() {
     levelButton.classList.remove('hidden')
     messageEl.innerText = 'Would you like to proceed?'
-    for (let i = 0; i < keyEls.length; i++) {
-        const key = keyEls[i];
-        key.style.backgroundColor = 'hsla(120, 100%, 25%, 0.409)';
-        key.style.border =  '3px solid lime'
-        key.style.color = 'lime'
-    }
+    // for (let i = 0; i < keyEls.length; i++) {
+    //     const key = keyEls[i];
+    //     key.style.backgroundColor = 'hsla(120, 100%, 25%, 0.409)';
+    //     key.style.border =  '3px solid lime'
+    //     key.style.color = 'lime'
+    // }
 }
 
 function playerTurn() {
@@ -276,26 +278,37 @@ function playAgain() {
 
 function losingMessage() {
     messageEl.innerText = 'YOU LOST! \nWanna try again?'
-    for (let i = 0; i < keyEls.length; i++) {
-        const key = keyEls[i];
-        key.style.backgroundColor = 'hsla(0, 100%, 50%, 0.409)';
-        key.style.border =  '3px solid red'
-        key.style.color = 'red'
-    }
+    // for (let i = 0; i < keyEls.length; i++) {
+    //     const key = keyEls[i];
+    //     key.style.backgroundColor = 'hsla(0, 100%, 50%, 0.409)';
+    //     key.style.border =  '3px solid red'
+    //     key.style.color = 'red'
+    // }
 }
 
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
     levelNumber.innerText = level
-    for (let i = 0; i < keyEls.length; i++) {
-        const key = keyEls[i];
-        key.style.backgroundColor = '';
-        key.style.border =  '3px solid white'
-        key.style.color = 'white'
-    }
+    // for (let i = 0; i < keyEls.length; i++) {
+    //     const key = keyEls[i];
+    //     key.style.backgroundColor = '';
+    //     key.style.border =  '3px solid white'
+    //     key.style.color = 'white'
+    // }
 }
 
 function handleMessage(message) {
     messageEl.innerText = message
 }
+
+navigationToggle.addEventListener('click', () => {
+    const visibility = primaryNavigation.getAttribute('data-visible')
+    if (visibility === 'false') {
+        primaryNavigation.setAttribute('data-visible', true)
+        navigationToggle.setAttribute('aria-expanded', true)
+    } else {
+        primaryNavigation.setAttribute('data-visible', false)
+        navigationToggle.setAttribute('aria-expanded', false)
+    }
+})
