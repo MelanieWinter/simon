@@ -37,6 +37,16 @@ const keyboard = {
     m: { label: 'M', color: 'rebeccapurple', tone: 350, active: false },
 }
 
+const computerMessages = [
+    'Watch the sequence . . .',
+    'Just a little harder this time . . .',
+    'Pay attention . . .',
+    "Wow! you're still here?",
+    'Keep it up!',
+    "You're doing great!",
+    'This is a tricky one . . .'
+]
+
 /*----- state variables -----*/
 let level = 2
 let keyPatternArray = []
@@ -56,7 +66,7 @@ const levelNumber = document.getElementById('levelNumber')
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
     buttonEl.style.marginBottom = '10vmin'
-    messageEl.innerText = 'Watch the sequence . . .'
+    // messageEl.innerText = 'Watch the sequence . . .'
     startGame()
 })
 
@@ -172,7 +182,7 @@ function leveler() {
     playerKeyPressArray = []
     pickRandomKey(keyboard)
     playKeyPattern()
-    randomMessage()
+    getRandomMessage()
     userInteractionEnabled = false
 }
 
@@ -192,6 +202,9 @@ function playKeyPattern() {
             if (i < keyPatternArray.length) {
                 setTimeout(playNextKey, 350)
             } else {
+                setTimeout(() => {
+                    userInteractionEnabled = true
+                }, 350)
                 playerTurn()
             }
         }, 350)
@@ -200,9 +213,7 @@ function playKeyPattern() {
 }
 
 function playerTurn() {
-    setTimeout(() => {
-        userInteractionEnabled = true
-    }, 350)
+    messageEl.innerText = "Now it's your turn . . ."
     // display message
 }
 
@@ -245,14 +256,20 @@ function resetGame() {
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
-    messageEl.innerText = 'Watch the sequence . . .'
+    // messageEl.innerText = 'Watch the sequence . . .'
     levelNumber.innerText = level
 }
 
-function randomMessage() {
+function getRandomMessage() {
+    const randomMessage = computerMessages[Math.floor(Math.random() * computerMessages.length)]
+    handleMessage(randomMessage)
+}
 
+function handleMessage(message) {
+    messageEl.innerText = message
 }
 
 function losingMessage() {
     messageEl.innerText = 'YOU LOST! \nWanna try again?'
 }
+
