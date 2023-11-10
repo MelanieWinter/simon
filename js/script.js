@@ -3,6 +3,7 @@
 // how to play, reset game
 // your high score
 // sfx controls
+// make it mobile friendly
 
 /*----- constants -----*/
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -41,10 +42,15 @@ const computerMessages = [
     'Watch the sequence . . .',
     'Just a little harder this time . . .',
     'Pay attention . . .',
-    "Wow! you're still here?",
+    "Wow, you're still here? Good job!!!",
     'Keep it up!',
     "You're doing great!",
-    'This is a tricky one . . .'
+    'This is a tricky one . . .',
+    "I'm nervous about this one . . .",
+    'Okay, this one is going to be tricky',
+    'I think I got you on this one . . .',
+    'Concentrate!!!',
+    'Stop reading this and look at the board!',
 ]
 
 /*----- state variables -----*/
@@ -65,20 +71,41 @@ const levelNumber = document.getElementById('levelNumber')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
-    buttonEl.style.marginBottom = '10vmin'
-    // messageEl.innerText = 'Watch the sequence . . .'
-    startGame()
+    handleStartButton()
+    render()
+    setTimeout(leveler, 500)
+})
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !startButton.classList.contains('hidden')) {
+        handleStartButton()
+        render()
+        setTimeout(leveler, 500)
+    }
 })
 
 levelButton.addEventListener('click', () => {
-    levelButton.classList.add('hidden')
-    levelNumber.innerText = level
+    handleLevelButton()
     leveler()
 })
 
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !levelButton.classList.contains('hidden')) {
+        handleLevelButton()
+        leveler()
+    }
+})
+
 resetButton.addEventListener('click', () => {
-    resetButton.classList.add('hidden')
+    handleResetButton()
     resetGame()
+})
+
+document.addEventListener('keydown', (event) => {
+    if(event.key === 'Enter' && !resetButton.classList.contains('hidden')) {
+        handleResetButton()
+        resetGame()
+    }
 })
 
 keyEls.forEach((keyEl) => {
@@ -131,11 +158,27 @@ function handleKeyColor(keyInfo) {
 }
 
 function handleKeyTone(keyInfo) {
-    // make a sfx on/off button which will make this run or not 
-    // if sfx is off return
-    // else run this function
     const keyEl = document.getElementById(keyInfo.label.toLowerCase())
-    playTone(keyInfo.tone,0.15)
+    playTone(keyInfo.tone,0.2)
+}
+
+function handleLevelButton() {
+    levelButton.classList.add('hidden')
+    levelNumber.innerText = level
+    for (let i = 0; i < keyEls.length; i++) {
+        const key = keyEls[i];
+        key.style.backgroundColor = '';
+        key.style.border =  '3px solid white'
+        key.style.color = 'white'
+    }
+}
+
+function handleResetButton() {
+    resetButton.classList.add('hidden')
+}
+
+function handleStartButton() {
+    buttonEl.style.marginBottom = '10vmin'
 }
 
 function pickRandomKey() {
@@ -155,12 +198,9 @@ function checkWinProgress() {
             userInteractionEnabled = false
             losingMessage()
             playAgain()
-            // make loser function to change dom to red/locked keys and display loser message and play again
-            // make a high score message that shows your highest level you reached
             return
         }
     }
-
     if (playerKeyPressArray.length === keyPatternArray.length) {
         console.log('YOU WIN!')
         userInteractionEnabled = false
@@ -175,13 +215,19 @@ function playAgain() {
 function nextLevel() {
     levelButton.classList.remove('hidden')
     messageEl.innerText = 'Would you like to proceed?'
+    for (let i = 0; i < keyEls.length; i++) {
+        const key = keyEls[i];
+        key.style.backgroundColor = 'hsla(120, 100%, 25%, 0.409)';
+        key.style.border =  '3px solid lime'
+        key.style.color = 'lime'
+    }
 }
 
 function leveler() {
     level++
     playerKeyPressArray = []
     pickRandomKey(keyboard)
-    playKeyPattern()
+    setTimeout(() => {playKeyPattern()}, 500)
     getRandomMessage()
     userInteractionEnabled = false
 }
@@ -190,7 +236,6 @@ function playKeyPattern() {
     computerTurn()
     let i = 0
     function playNextKey() {
-        // computerTurn()
         const key = keyPatternArray[i]
         const keyInfo = keyboard[key]
         keyInfo.active = true
@@ -204,7 +249,7 @@ function playKeyPattern() {
             } else {
                 setTimeout(() => {
                     userInteractionEnabled = true
-                }, 350)
+                }, 200)
                 playerTurn()
             }
         }, 350)
@@ -214,13 +259,11 @@ function playKeyPattern() {
 
 function playerTurn() {
     messageEl.innerText = "Now it's your turn . . ."
-    // display message
 }
 
 function computerTurn() {
     userInteractionEnabled = false
     levelButton.classList.add('hidden')
-    //display message
 }
 
 function playTone(frequency, duration) {
@@ -232,32 +275,23 @@ function playTone(frequency, duration) {
     oscillator.stop(audioContext.currentTime + duration)
 }
 
-function startGame() {
-    render()
-    setTimeout(leveler, 500)
-}
-
-
-// add button for reset when you lose
-// add menu with reset button to reset at any time
 function resetGame() {
     level = 2
     keyPatternArray = []
     render()
     setTimeout(leveler, 500)
-    // init()
 }
-
-// function init() {
-//     startButton.classList.remove('hidden')
-//     keyboardEl.classList.add('hidden')
-// }
 
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
-    // messageEl.innerText = 'Watch the sequence . . .'
     levelNumber.innerText = level
+    for (let i = 0; i < keyEls.length; i++) {
+        const key = keyEls[i];
+        key.style.backgroundColor = '';
+        key.style.border =  '3px solid white'
+        key.style.color = 'white'
+    }
 }
 
 function getRandomMessage() {
@@ -271,5 +305,11 @@ function handleMessage(message) {
 
 function losingMessage() {
     messageEl.innerText = 'YOU LOST! \nWanna try again?'
+    for (let i = 0; i < keyEls.length; i++) {
+        const key = keyEls[i];
+        key.style.backgroundColor = 'hsla(0, 100%, 50%, 0.409)';
+        key.style.border =  '3px solid red'
+        key.style.color = 'red'
+    }
 }
 
