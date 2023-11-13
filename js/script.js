@@ -73,7 +73,8 @@ const levelNumber = document.getElementById('levelNumber')
 const primaryNavigation = document.querySelector('.primary-navigation')
 const navigationToggle = document.querySelector('.mobile-nav-toggle')
 const closePopupButton = document.querySelector('.close-popup')
-const popupEl = document.querySelector('.menu-popup')
+const howToPlayPopUp = document.getElementById('howToPlayPopUp')
+const howToPlayEl = document.getElementById('howToPlayLink')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
@@ -133,19 +134,23 @@ navigationToggle.addEventListener('click', () => {
     }
 })
 
-closePopupButton.addEventListener('click', hidePopup)
+// closePopupButton.addEventListener('click', hidePopup)
 
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !popupEl.classList.contains('hidden')) {
-        hidePopup()
-    }
-})
+// document.addEventListener('keydown', (event) => {
+//     if (event.key === 'Escape' && !howToPlayPopUp.classList.contains('hidden')) {
+//         hidePopup()
+//     }
+// })
 
-/*----- functions -----*/
-function hidePopup() {
-    popupEl.classList.add('hidden')
-}
+// howToPlayEl.addEventListener('click',
+
+// /*----- functions -----*/
+// function hidePopup() {
+//     howToPlayPopUp.classList.add('hidden')
+// }
+
+// make into a toggle
 
 function handleKeyPress(event) {
     const key = event.key || event.target.id
