@@ -8,58 +8,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <script defer src="js/script.js"></script>
-    <title>Simon Says</title>
+    <title>Ty.Mon Says</title>
 </head>
 <body class="">
     
     <header class="">
-        <h1 class="primary-logo">S I M O N</h1>
+        <h1 class="primary-logo">T Y.M O N</h1>
 
         <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
 
         <nav>
             <ul id="primary-navigation" data-visible="false" class="primary-navigation">
                 <li>
-                    <a href="">
-                        <span aria-hidden="true">00</span>How To Play
-                    </a>
-                    
+                    <span aria-hidden="true">00</span>How To Play
                 </li>
                 <li>
-                    <a href="">
-                        <span aria-hidden="true">01</span>SFX Controls
-                    </a>
+                    <span aria-hidden="true">01</span>SFX Controls
                 </li>
                 <li>
-                    <a href="">
-                        <span aria-hidden="true">02</span>Reset Game
-                    </a>
+                    <span aria-hidden="true">02</span>Reset Game
                 </li>
                 <li>
-                    <a href="">
-                        <span aria-hidden="true">03</span>High Score
-                    </a>
+                    <span aria-hidden="true">03</span>High Score
                 </li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="message-container flex-ctr">
+        <div class="menu-popup how-to-play flex-ctr">
+            <h2>How To Play</h2>
+            <p>
+                ... Use your computer keyboard or the on-screen keys to play.
+                <br>... Follow the computer sequence to proceed to the next level.
+                <br>... Every level, the computer will add ONE additional key for you to repeat. 
+                <br>... Get a high-level score and win acheivements!
+            </p>
+        </div>
 
-            <div id="message" class="message">
-                Welcome to SIMON!
+        <div class="message-container flex-ctr">
+            <div id="message" class="message hidden">
+                Welcome to TY.MON Says!
                 <br>Follow the sequence and see how far you can go
             </div>
-
             <div id="buttonContainer" class="button-container flex-ctr">
-                <button id="startButton" class="start-button">Start Game</button>
+                <button id="startButton" class="start-button hidden">Start Game</button>
                 <button id="levelButton" class="level-button hidden">LEVEL :  
                     <span id="levelNumber">2</span>
                 </button>
                 <button id="resetButton" class="reset-button hidden">Restart Game</button>
             </div>
-
         </div>
 
         <div id="keyboardContainer" class="keyboard-container hidden">  

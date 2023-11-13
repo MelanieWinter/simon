@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 header {
@@ -25,8 +26,6 @@ header {
 
 nav {
     display: flex;
-    /* margin-bottom: 6vmin; */
-    /* padding-right: 2vmin; */
     align-items: center;
 }
 
@@ -43,7 +42,7 @@ nav {
 .primary-navigation {
     display: flex;
     flex-direction: row;
-    gap: 2.5vmin;
+    gap: 5vmin;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -60,13 +59,38 @@ nav {
 }
 
 .primary-navigation a {
-    text-decoration: none;
     color: white;
+}
+
+.primary-navigation a:hover {
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .primary-navigation a > [aria-hidden = "true"] {
     font-weight: 700;
     margin-inline-end: 0.75em;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 5vmin;
+    text-decoration: underline;
+}
+
+p {
+    line-height: 1.75rem;
+    font-size: 1rem;
+}
+
+.menu-popup {
+    height: 50vh;
+    width: 50vw;
+    background: hsl(0 0% 100%/ 0.1);
+    backdrop-filter: blur(1rem);
+    margin-top: 15vmin;
+    flex-direction: column;
+    text-align: center;
 }
 
 @media (max-width: 35em) {
@@ -112,8 +136,6 @@ nav {
     .primary-logo {
         padding-top: 2vmin;
         font-size: 3.5em;
-        /* width: 10rem;
-        line-height: 1em; */
     }
 
     .primary-navigation a > [aria-hidden]{
@@ -178,19 +200,6 @@ main {
     position: relative;
 }
 
-/* .start-button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(251, 251, 251, 0.3);
-    filter: blur(15px);
-    border-radius: 10%;
-    z-index: -1;
-} */
-
 .start-button:hover {
     border: 2px solid white;
     font-weight: 700;
@@ -210,19 +219,6 @@ main {
     position: relative;
 }
 
-/* .level-button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(251, 251, 251, 0.3);
-    filter: blur(15px);
-    border-radius: 10%;
-    z-index: -1;
-} */
-
 .level-button:hover {
     border: 2px solid white;
     font-weight: 700;
@@ -241,19 +237,6 @@ main {
     color: white;
     position: relative;
 }
-
-/* .reset-button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(251, 251, 251, 0.3);
-    filter: blur(15px);
-    border-radius: 10%;
-    z-index: -1;
-} */
 
 .reset-button:hover {
     border: 2px solid white;
