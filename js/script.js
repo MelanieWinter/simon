@@ -72,6 +72,8 @@ const resetButton = document.getElementById('resetButton')
 const levelNumber = document.getElementById('levelNumber')
 const primaryNavigation = document.querySelector('.primary-navigation')
 const navigationToggle = document.querySelector('.mobile-nav-toggle')
+const closePopupButton = document.querySelector('.close-popup')
+const popupEl = document.querySelector('.menu-popup')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
@@ -120,7 +122,31 @@ keyEls.forEach((keyEl) => {
 
 document.addEventListener('keydown', handleKeyPress)
 
+navigationToggle.addEventListener('click', () => {
+    const visibility = primaryNavigation.getAttribute('data-visible')
+    if (visibility === 'false') {
+        primaryNavigation.setAttribute('data-visible', true)
+        navigationToggle.setAttribute('aria-expanded', true)
+    } else {
+        primaryNavigation.setAttribute('data-visible', false)
+        navigationToggle.setAttribute('aria-expanded', false)
+    }
+})
+
+closePopupButton.addEventListener('click', hidePopup)
+
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !popupEl.classList.contains('hidden')) {
+        hidePopup()
+    }
+})
+
 /*----- functions -----*/
+function hidePopup() {
+    popupEl.classList.add('hidden')
+}
+
 function handleKeyPress(event) {
     const key = event.key || event.target.id
     if (keyboard.hasOwnProperty(key) && userInteractionEnabled) {
@@ -278,13 +304,3 @@ function handleMessage(message) {
     messageEl.innerText = message
 }
 
-navigationToggle.addEventListener('click', () => {
-    const visibility = primaryNavigation.getAttribute('data-visible')
-    if (visibility === 'false') {
-        primaryNavigation.setAttribute('data-visible', true)
-        navigationToggle.setAttribute('aria-expanded', true)
-    } else {
-        primaryNavigation.setAttribute('data-visible', false)
-        navigationToggle.setAttribute('aria-expanded', false)
-    }
-})

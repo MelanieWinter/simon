@@ -36,23 +36,26 @@
     </header>
 
     <main>
-        <div class="menu-popup how-to-play flex-ctr">
-            <h2>How To Play</h2>
-            <p>
-                ... Use your computer keyboard or the on-screen keys to play.
-                <br>... Follow the computer sequence to proceed to the next level.
-                <br>... Every level, the computer will add ONE additional key for you to repeat. 
-                <br>... Get a high-level score and win acheivements!
-            </p>
+        <div class="menu-popup how-to-play">
+            <div class="flex-ctr">
+                <h2>How To Play</h2>
+                <p>
+                    ... Use your computer keyboard or the on-screen keys to play.
+                    <br>... Follow the computer sequence to proceed to the next level.
+                    <br>... Every level, the computer will add ONE additional key for you to repeat. 
+                    <br>... Get a high-level score and win acheivements!
+                </p>
+            </div>
+            <img src="./assets/icon-close.svg" alt="close popup" class="close-popup">
         </div>
 
         <div class="message-container flex-ctr">
-            <div id="message" class="message hidden">
+            <div id="message" class="message">
                 Welcome to TY.MON Says!
                 <br>Follow the sequence and see how far you can go
             </div>
             <div id="buttonContainer" class="button-container flex-ctr">
-                <button id="startButton" class="start-button hidden">Start Game</button>
+                <button id="startButton" class="start-button">Start Game</button>
                 <button id="levelButton" class="level-button hidden">LEVEL :  
                     <span id="levelNumber">2</span>
                 </button>
