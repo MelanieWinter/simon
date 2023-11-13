@@ -22,22 +22,22 @@
                 <li id="howToPlayLink">
                     <span aria-hidden="true">00</span>How To Play
                 </li>
-                <li>
+                <li id="sfxControlsLink">
                     <span aria-hidden="true">01</span>SFX Controls
                 </li>
-                <li>
-                    <span aria-hidden="true">02</span>Reset Game
+                <li id="highScoreLink">
+                    <span aria-hidden="true">02</span>High Score
                 </li>
-                <li>
-                    <span aria-hidden="true">03</span>High Score
+                <li id="resetGameLink">
+                    <span aria-hidden="true">03</span>Reset Game
                 </li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="menu-popup how-to-play hidden" id="howToPlayPopup">
-            <div class="flex-ctr">
+        <div class="popup-container hidden" id="popupContainer">
+            <div class="how-to-play-div hidden" id="howToPlayDiv">
                 <h2>How To Play</h2>
                 <p>
                     ... Use your computer keyboard or the on-screen keys to play.
@@ -46,7 +46,20 @@
                     <br>... Get a high-level score and win acheivements!
                 </p>
             </div>
-            <img src="./assets/icon-close.svg" alt="close popup" class="close-popup">
+            <div class="sfx-controls-div hidden" id="sfxControlsDiv">
+                <h2>SFX Controls</h2>
+                <p>
+                    ON/OFF
+                    <br>VOLUME
+                </p>
+            </div>
+            <div class="high-score-div hidden" id="highScoreDiv">
+                <h2>High Score</h2>
+                <p>
+                    HIGH SCORE !!!
+                </p>
+            </div>
+            <img src="./assets/icon-close.svg" alt="close popup" class="close-popup" id="closePopup">
         </div>
 
         <div class="message-container flex-ctr">

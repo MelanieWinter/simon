@@ -72,9 +72,15 @@ const resetButton = document.getElementById('resetButton')
 const levelNumber = document.getElementById('levelNumber')
 const primaryNavigation = document.querySelector('.primary-navigation')
 const navigationToggle = document.querySelector('.mobile-nav-toggle')
-const closePopupButton = document.querySelector('.close-popup')
-const howToPlayPopUp = document.getElementById('howToPlayPopUp')
-const howToPlayEl = document.getElementById('howToPlayLink')
+const closePopupButton = document.getElementById('closePopup')
+const popupContainerEl = document.getElementById('popupContainer')
+const howToPlayLink = document.getElementById('howToPlayLink')
+const howToPlayDivEl = document.getElementById('howToPlayDiv')
+const sfxControlsLink = document.getElementById('sfxControlsLink')
+const sfxControlsDivEl = document.getElementById('sfxControlsDiv')
+const highScoreLink = document.getElementById('highScoreLink')
+const highScoreDivEl = document.getElementById('highScoreDiv')
+const resetGameLink = document.getElementById('resetGameLink')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
@@ -134,23 +140,50 @@ navigationToggle.addEventListener('click', () => {
     }
 })
 
-// closePopupButton.addEventListener('click', hidePopup)
+howToPlayLink.addEventListener('click', () => {
+    handlePopup(howToPlayDivEl)
+})
+
+sfxControlsLink.addEventListener('click', () => {
+    handlePopup(sfxControlsDivEl)
+})
+
+highScoreLink.addEventListener('click', () => {
+    handlePopup(highScoreDivEl)
+})
+
+resetGameLink.addEventListener('click', () => {
+    countdownReset()
+    setTimeout(() => { 
+        if (!startButton.classList.contains('hidden')) {
+            handleStartButton()
+            render()
+            setTimeout(leveler, 500)
+        } else if (!levelButton.classList.contains('hidden')) {
+            resetGame()
+            handleLevelButton()
+        } else if (!resetButton.classList.contains('hidden')) {
+            handleResetButton()
+            resetGame()
+        } else {
+            resetGame()
+        }
+    },4000)
+})
+
+closePopupButton.addEventListener('click', () => {
+    handlePopup(null)
+})
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !popupContainerEl.classList.contains('hidden')) {
+        handlePopup(null)
+    }
+})
 
 
-// document.addEventListener('keydown', (event) => {
-//     if (event.key === 'Escape' && !howToPlayPopUp.classList.contains('hidden')) {
-//         hidePopup()
-//     }
-// })
 
-// howToPlayEl.addEventListener('click',
-
-// /*----- functions -----*/
-// function hidePopup() {
-//     howToPlayPopUp.classList.add('hidden')
-// }
-
-// make into a toggle
+/*----- functions -----*/
 
 function handleKeyPress(event) {
     const key = event.key || event.target.id
@@ -165,6 +198,22 @@ function handleKeyPress(event) {
             keyInfo.active = false
         }, 200)
     }
+}
+
+
+
+function countdownReset() {
+    let count = 3;
+
+    const countdownInterval = setInterval(() => {
+        if (count > 0) {
+            messageEl.innerText = count
+            count--
+        } else {
+            clearInterval(countdownInterval)
+            messageEl.innerText = "Here we go!!!"
+        }
+    }, 800);
 }
 
 function pickRandomKey() {
@@ -266,6 +315,21 @@ function handleResetButton() {
 
 function handleStartButton() {
     buttonEl.style.marginBottom = '10vmin'
+}
+
+function handlePopup(selectedDiv) {
+    const isSameDiv = selectedDiv === popupContainerEl.querySelector('.popup-content:not(.hidden)')
+
+    if (!isSameDiv) {
+        howToPlayDivEl.classList.add('hidden')
+        sfxControlsDivEl.classList.add('hidden')
+        highScoreDivEl.classList.add('hidden')
+    }
+
+    if (selectedDiv) {
+        selectedDiv.classList.toggle('hidden')
+    }
+    popupContainerEl.classList.toggle('hidden', isSameDiv)
 }
 
 function nextLevel() {

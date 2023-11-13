@@ -72,7 +72,7 @@ nav {
     margin-inline-end: 0.75em;
 }
 
-.menu-popup {
+.popup-container {
     height: 50vh;
     width: 50vw;
     background: hsl(0 0% 100%/ 0.1);
@@ -84,6 +84,10 @@ nav {
     justify-content: center;
     align-items: center;
     z-index:9999;
+}
+
+.popup-container > div {
+    text-align: center;
 }
 
 .close-popup {
@@ -268,7 +272,6 @@ main {
 
 .keyboard-container {
     margin-bottom: 7vmin;
-    /* margin-top:  10vmin; */
 }
 
 .keyboard-row-1 {
@@ -352,4 +355,8 @@ main {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+}
+
+.red {
+    color: red;
 }
