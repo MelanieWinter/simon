@@ -54,6 +54,7 @@ let keyPatternArray = []
 let playerKeyPressArray = []
 let userInteractionEnabled = true
 let highScore = localStorage.getItem('highScore') || 0
+let isSoundOn = true
 
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
@@ -78,6 +79,7 @@ const resetGameLink = document.getElementById('resetGameLink')
 const highScoreDisplay = document.getElementById('highScoreDisplay')
 const highScoreValue = document.getElementById('highScoreValue')
 const resetHighScoreButton = document.getElementById('resetHighScoreButton')
+const soundToggle = document.getElementById('soundToggle')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
@@ -181,6 +183,8 @@ document.addEventListener('keydown', (event) => {
 })
 
 resetHighScoreButton.addEventListener('click', resetHighScore)
+
+soundToggle.addEventListener('click', toggleSound)
 
 /*----- functions -----*/
 
@@ -352,12 +356,14 @@ function computerTurn() {
 }
 
 function playTone(frequency, duration) {
-    const oscillator = audioContext.createOscillator()
-    oscillator.type = 'sine'
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
-    oscillator.connect(audioContext.destination)
-    oscillator.start()
-    oscillator.stop(audioContext.currentTime + duration)
+    if(isSoundOn) {
+        const oscillator = audioContext.createOscillator()
+        oscillator.type = 'sine'
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
+        oscillator.connect(audioContext.destination)
+        oscillator.start()
+        oscillator.stop(audioContext.currentTime + duration)
+    }
 }
 
 function playAgain() {
@@ -398,4 +404,13 @@ function resetHighScore() {
     localStorage.removeItem('highScore')
     highScore = 0
     updateHighScoreDisplay()
+}
+
+function toggleSound() {
+
+    if (!isSoundOn) {
+        isSoundOn = true
+    } else {
+        isSoundOn = false
+    }
 }

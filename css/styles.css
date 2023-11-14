@@ -125,6 +125,30 @@ p {
 
 .high-score-div > button {
     margin-top: 9vmin;
+    height: 3vmin;
+    width: 25vmin;
+    border: 1px solid red; 
+    border-radius: 10%;
+    background: hsla(0, 95%, 47%, 0.237);
+    backdrop-filter: blur(1rem);
+    color: red;
+    position: relative;
+}
+
+.high-score-div > button:hover {
+    border: 2px solid red;
+    font-weight: 700;
+    cursor: pointer;
+    transform: scale(0.95);
+    transition: transform 25ms ease-in;
+}
+
+#soundToggle:hover {
+    cursor: pointer;
+}
+
+#soundToggle:active {
+    color: red;
 }
 
 @media (max-width: 35em) {
