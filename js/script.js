@@ -380,7 +380,11 @@ function handleMessage(message) {
 
 function updateHighScore() {
     if (level > highScore) {
-        highScore = level
+        if (level === 1) {
+            highScore = level
+        } else {
+            highScore = level - 1
+        }     
         localStorage.setItem('highScore', highScore)
         updateHighScoreDisplay()
     }
