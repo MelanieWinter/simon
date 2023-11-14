@@ -1,9 +1,12 @@
-/*----- constants -----*/
+// CONSTANTS //
+
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioContext = new AudioContext()
 const gainNode = audioContext.createGain()
 gainNode.connect(audioContext.destination)
 const volumeControl = document.getElementById('volumeControl')
+
+// MODEL //
 
 const keyboard = {
     q: { label: 'Q', color: 'darksalmon', tone: 100, active: false},
@@ -51,7 +54,8 @@ const computerMessages = [
     'Try this one out!',
 ]
 
-/*----- state variables -----*/
+// STATE VARIABLES //
+
 let level = 1
 let keyPatternArray = []
 let playerKeyPressArray = []
@@ -61,7 +65,8 @@ let isSoundOn = true
 let gamePhase = 'start'
 let isPopupOpen = false
 
-/*----- cached elements  -----*/
+// CACHED ELEMENTS //
+
 const keyEls = document.querySelectorAll('.key')
 const keyboardEl = document.getElementById('keyboardContainer')
 const messageEl = document.getElementById('message')
@@ -86,7 +91,8 @@ const highScoreList = document.getElementById('highScoreList')
 const resetHighScoresButton = document.getElementById('resetHighScoresButton')
 const soundToggle = document.getElementById('check')
 
-/*----- event listeners -----*/
+// EVENT LISTENERS //
+
 startButton.addEventListener('click', () => {
     handleStartButton()
     setTimeout(leveler, 500)
@@ -205,8 +211,6 @@ resetHighScoresButton.addEventListener('click', resetHighScores)
 
 soundToggle.addEventListener('click', toggleSound)
 
-/*----- functions -----*/
-
 // VIEW //
 
 function handleKeyColor(keyInfo) {
@@ -293,11 +297,12 @@ function handlePopup(selectedDiv) {
 
 function updateHighScoreDisplay() {
     highScoreList.innerHTML = ''
-
     highScores.forEach((score, index) => {
         const entry = document.createElement('div')
         entry.classList.add('high-score-entry')
-        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level - 1}`
+        const rankContent = index === 0 ? '🏆' : `#${index + 1}`
+
+        entry.innerHTML = `<span class="rank">${rankContent}</span> ${score.playerName}: Level ${score.level - 1}`
         highScoreList.appendChild(entry)
     })
 }
