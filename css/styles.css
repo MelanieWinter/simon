@@ -101,6 +101,10 @@ nav {
     cursor: pointer;
 }
 
+.reset-game-link {
+    pointer-events: none;
+}
+
 /* .menu-popup > div {
     flex-direction: column;
     text-align: center;
@@ -436,15 +440,15 @@ main {
 
 :focus {
     box-shadow: 
-    0 0 0 10px rgba(184, 0, 96, .7);
+    0 0 0 5px rgba(184, 0, 96, .7);
 }
 
 input[type="checkbox"].toggle:focus + label::before { 
     box-shadow: 
-    0 0 0 10px rgba(184, 0, 96, .7);
+    0 0 0 5px rgba(184, 0, 96, .7);
 }
 
 .close-popup:focus {
     box-shadow: 
-    0 0 0 10px rgba(184, 0, 96, .7);
+    0 0 0 5px rgba(184, 0, 96, .7);
 } 

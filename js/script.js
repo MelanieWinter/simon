@@ -55,6 +55,8 @@ let playerKeyPressArray = []
 let userInteractionEnabled = true
 let highScores = JSON.parse(localStorage.getItem('highScores')) || []
 let isSoundOn = true
+let gamePhase = 'start'
+let isPopupOpen = false
 
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
@@ -106,7 +108,6 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !levelButton.classList.contains('hidden')) {
         handleLevelButton()
         leveler()
-
     }
 })
 
@@ -142,31 +143,37 @@ navigationToggle.addEventListener('click', () => {
 })
 
 howToPlayLink.addEventListener('click', () => {
+    isPopupOpen = true
     handlePopup(howToPlayDivEl)
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key === "0") {
+        isPopupOpen = true
         handlePopup(howToPlayDivEl)
     }
 })
 
 sfxControlsLink.addEventListener('click', () => {
+    isPopupOpen = true
     handlePopup(sfxControlsDivEl)
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key === "1") {
+        isPopupOpen = true
         handlePopup(sfxControlsDivEl)
     }
 })
 
 highScoreLink.addEventListener('click', () => {
+    isPopupOpen = true
     handlePopup(highScoreDivEl)
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key === "2") {
+        isPopupOpen = true
         handlePopup(highScoreDivEl)
     }
 })
@@ -174,17 +181,19 @@ document.addEventListener('keydown', (event) => {
 resetGameLink.addEventListener('click', handleResetGameLink)
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === "3") {
+    if (event.key === "3" && gamePhase !== 'start') {
         handleResetGameLink()
     }
 })
 
 closePopupButton.addEventListener('click', () => {
+    isPopupOpen = false
     handlePopup(null)
 })
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !popupContainerEl.classList.contains('hidden')) {
+    if (event.key === 'Escape') {
+        isPopupOpen = false
         handlePopup(null)
     }
 })
@@ -250,6 +259,7 @@ function handleMessage(message) {
 function countdownReset() {
     let count = 3
     resetGameLink.style.pointerEvents = 'none'
+    resetGameLink.style.color = 'red'
     const countdownInterval = setInterval(() => {
         if (count > 0) {
             messageEl.innerText = count
@@ -257,6 +267,7 @@ function countdownReset() {
         } else {
             clearInterval(countdownInterval)
             resetGameLink.style.pointerEvents = 'auto'
+            resetGameLink.style.color = 'white'
             messageEl.innerText = "Here we go!!!"
         }
     }, 500)
@@ -302,14 +313,11 @@ function updateHighScore() {
     }
 }
 
-function handleResetGameLink() {
-    
-}
-
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
     levelNumber.innerText = level + 1
+    resetGameLink.style.pointerEvents = 'auto'
 }
 
 // CONTROLLER //
@@ -356,6 +364,7 @@ function playTone(frequency, duration) {
 
 function playKeyPattern() {
     userInteractionEnabled = false
+    gamePhase = 'default'
     computerTurn()
     let i = 0
     function playNextKey() {
@@ -386,17 +395,20 @@ function checkWinProgress() {
     for (let i = 0; i < playerKeyPressArray.length; i++) {
         if (playerKeyPressArray[i] !== partialPattern[i]) {
             userInteractionEnabled = false
+            gamePhase = 'reset'
             losingMessage()
             playAgain()
             if (level - 1 > getHighestLevel()) {
                 updateHighScore()
             }
-            return
+            return 
         }
     }
     if (playerKeyPressArray.length === keyPatternArray.length) {
         userInteractionEnabled = false
+        gamePhase = 'level'
         nextLevel()
+        return
     }
 }
 
@@ -430,32 +442,14 @@ function getRandomMessage() {
     handleMessage(randomMessage)
 }
 
-function getCurrentState() {
-    if (!startButton.classList.contains('hidden')) {
-        return 'start'
-    } else if (!levelButton.classList.contains('hidden')) {
-        return 'level'
-    } else if (!resetButton.classList.contains('hidden')) {
-        return 'reset'
-    } else {
-        return 'default'
-    }
-}
-
-function handleResetGameLink() {
+function handleResetGameLink(gamePhase) {
     countdownReset()
     handlePopup(null)
-    const currentState = getCurrentState()
     setTimeout(() => {
-        switch (currentState) {
-            case 'start':
-                handleStartButton()
-                setTimeout(leveler, 500)
-                render()
-                break
+        switch (gamePhase) {
             case 'level':
-                resetGame()
                 handleLevelButton()
+                resetGame()
                 break
             case 'reset':
                 handleResetButton()
