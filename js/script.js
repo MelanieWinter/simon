@@ -1,10 +1,3 @@
-
-// make hamburger menu on top right of screen with drop down
-// how to play, reset game
-// your high score
-// sfx controls
-// make it mobile friendly
-
 /*----- constants -----*/
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext()
@@ -56,10 +49,11 @@ const computerMessages = [
 ]
 
 /*----- state variables -----*/
-let level = 2
+let level = 1
 let keyPatternArray = []
 let playerKeyPressArray = []
 let userInteractionEnabled = true
+let highScore = localStorage.getItem('highScore') || 0
 
 /*----- cached elements  -----*/
 const keyEls = document.querySelectorAll('.key')
@@ -81,31 +75,36 @@ const sfxControlsDivEl = document.getElementById('sfxControlsDiv')
 const highScoreLink = document.getElementById('highScoreLink')
 const highScoreDivEl = document.getElementById('highScoreDiv')
 const resetGameLink = document.getElementById('resetGameLink')
+const highScoreDisplay = document.getElementById('highScoreDisplay')
+const highScoreValue = document.getElementById('highScoreValue')
+const resetHighScoreButton = document.getElementById('resetHighScoreButton')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
     handleStartButton()
-    render()
     setTimeout(leveler, 500)
+    render()
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !startButton.classList.contains('hidden')) {
         handleStartButton()
-        render()
         setTimeout(leveler, 500)
+        render()
     }
 })
 
 levelButton.addEventListener('click', () => {
     handleLevelButton()
     leveler()
+
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !levelButton.classList.contains('hidden')) {
         handleLevelButton()
         leveler()
+
     }
 })
 
@@ -181,9 +180,11 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
-
+resetHighScoreButton.addEventListener('click', resetHighScore)
 
 /*----- functions -----*/
+
+updateHighScoreDisplay()
 
 function handleKeyPress(event) {
     const key = event.key || event.target.id
@@ -199,8 +200,6 @@ function handleKeyPress(event) {
         }, 200)
     }
 }
-
-
 
 function countdownReset() {
     let count = 3;
@@ -276,10 +275,15 @@ function playKeyPattern() {
 }
 
 function resetGame() {
-    level = 2
-    keyPatternArray = []
+    resetScores()
     render()
     setTimeout(leveler, 500)
+}
+
+function resetScores() {
+    level = 1
+    keyPatternArray = []
+    updateHighScoreDisplay()
 }
 
 function getRandomMessage() {
@@ -300,13 +304,13 @@ function handleKeyColor(keyInfo) {
 }
 
 function handleKeyTone(keyInfo) {
-    const keyEl = document.getElementById(keyInfo.label.toLowerCase())
+    // const keyEl = document.getElementById(keyInfo.label.toLowerCase())
     playTone(keyInfo.tone,0.2)
 }
 
 function handleLevelButton() {
     levelButton.classList.add('hidden')
-    levelNumber.innerText = level
+    levelNumber.innerText = level + 1
 }
 
 function handleResetButton() {
@@ -335,6 +339,7 @@ function handlePopup(selectedDiv) {
 function nextLevel() {
     levelButton.classList.remove('hidden')
     messageEl.innerText = 'Would you like to proceed?'
+    updateHighScore()
 }
 
 function playerTurn() {
@@ -366,10 +371,27 @@ function losingMessage() {
 function render() {
     startButton.classList.add('hidden')
     keyboardEl.classList.remove('hidden')
-    levelNumber.innerText = level
+    levelNumber.innerText = level + 1
 }
 
 function handleMessage(message) {
     messageEl.innerText = message
 }
 
+function updateHighScore() {
+    if (level > highScore) {
+        highScore = level
+        localStorage.setItem('highScore', highScore)
+        updateHighScoreDisplay()
+    }
+}
+
+function updateHighScoreDisplay() {
+    highScoreValue.textContent = highScore
+}
+
+function resetHighScore() {
+    localStorage.removeItem('highScore')
+    highScore = 0
+    updateHighScoreDisplay()
+}

@@ -117,6 +117,16 @@ p {
     font-size: 1rem;
 }
 
+#highScoreDisplay {
+    margin-top: 7vmin;
+    font-size: 6rem;
+    font-weight: 800;
+}
+
+.high-score-div > button {
+    margin-top: 9vmin;
+}
+
 @media (max-width: 35em) {
     .primary-logo {
         font-size: 4em;
