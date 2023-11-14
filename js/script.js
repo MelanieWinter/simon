@@ -53,7 +53,6 @@ let level = 1
 let keyPatternArray = []
 let playerKeyPressArray = []
 let userInteractionEnabled = true
-// let highScore = localStorage.getItem('highScore') || 0
 let highScores = JSON.parse(localStorage.getItem('highScores')) || []
 let isSoundOn = true
 
@@ -78,7 +77,6 @@ const highScoreLink = document.getElementById('highScoreLink')
 const highScoreDivEl = document.getElementById('highScoreDiv')
 const resetGameLink = document.getElementById('resetGameLink')
 const highScoreDisplay = document.getElementById('highScoreDisplay')
-// const highScoreValue = document.getElementById('highScoreValue')
 const highScoreList = document.getElementById('highScoreList')
 const resetHighScoresButton = document.getElementById('resetHighScoresButton')
 const soundToggle = document.getElementById('check')
@@ -147,31 +145,38 @@ howToPlayLink.addEventListener('click', () => {
     handlePopup(howToPlayDivEl)
 })
 
+document.addEventListener('keydown', (event) => {
+    if (event.key === "0") {
+        handlePopup(howToPlayDivEl)
+    }
+})
+
 sfxControlsLink.addEventListener('click', () => {
     handlePopup(sfxControlsDivEl)
+})
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === "1") {
+        handlePopup(sfxControlsDivEl)
+    }
 })
 
 highScoreLink.addEventListener('click', () => {
     handlePopup(highScoreDivEl)
 })
 
-resetGameLink.addEventListener('click', () => {
-    countdownReset()
-    setTimeout(() => { 
-        if (!startButton.classList.contains('hidden')) {
-            handleStartButton()
-            render()
-            setTimeout(leveler, 500)
-        } else if (!levelButton.classList.contains('hidden')) {
-            resetGame()
-            handleLevelButton()
-        } else if (!resetButton.classList.contains('hidden')) {
-            handleResetButton()
-            resetGame()
-        } else {
-            resetGame()
-        }
-    },4000)
+document.addEventListener('keydown', (event) => {
+    if (event.key === "2") {
+        handlePopup(highScoreDivEl)
+    }
+})
+
+resetGameLink.addEventListener('click', handleResetGameLink)
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === "3") {
+        handleResetGameLink()
+    }
 })
 
 closePopupButton.addEventListener('click', () => {
@@ -190,6 +195,125 @@ soundToggle.addEventListener('click', toggleSound)
 
 /*----- functions -----*/
 
+// VIEW //
+
+function handleKeyColor(keyInfo) {
+    if (keyInfo.active === true) {
+        const keyEl = document.getElementById(keyInfo.label.toLowerCase())
+        keyEl.style.backgroundColor = keyInfo.color
+        keyEl.classList.add('active')
+        setTimeout(() => {
+            keyEl.style.backgroundColor = ''
+            keyEl.classList.remove('active')
+        }, 200)
+    }
+}
+
+function handleLevelButton() {
+    levelButton.classList.add('hidden')
+    levelNumber.innerText = level + 1
+}
+
+function handleResetButton() {
+    resetButton.classList.add('hidden')
+}
+
+function handleStartButton() {
+    buttonEl.style.marginBottom = '10vmin'
+}
+
+function nextLevel() {
+    levelButton.classList.remove('hidden')
+    messageEl.innerText = 'Would you like to proceed?'
+}
+
+function playerTurn() {
+    messageEl.innerText = "Now it's your turn . . ."
+}
+
+function computerTurn() {
+    levelButton.classList.add('hidden') 
+}
+
+function playAgain() {
+    resetButton.classList.remove('hidden')
+}
+
+function losingMessage() {
+    messageEl.innerText = 'YOU LOST! \nWanna try again?'
+}
+
+function handleMessage(message) {
+    messageEl.innerText = message
+}
+
+function countdownReset() {
+    let count = 3
+    resetGameLink.style.pointerEvents = 'none'
+    const countdownInterval = setInterval(() => {
+        if (count > 0) {
+            messageEl.innerText = count
+            count--
+        } else {
+            clearInterval(countdownInterval)
+            resetGameLink.style.pointerEvents = 'auto'
+            messageEl.innerText = "Here we go!!!"
+        }
+    }, 500)
+}
+
+function handlePopup(selectedDiv) {
+    const isSameDiv = selectedDiv === popupContainerEl.querySelector('.popup-content:not(.hidden)')
+
+    if (!isSameDiv) {
+        howToPlayDivEl.classList.add('hidden')
+        sfxControlsDivEl.classList.add('hidden')
+        highScoreDivEl.classList.add('hidden')
+    }
+
+    if (selectedDiv) {
+        selectedDiv.classList.toggle('hidden')
+    }
+    popupContainerEl.classList.toggle('hidden', isSameDiv)
+}
+
+function updateHighScoreDisplay() {
+    highScoreList.innerHTML = ''
+
+    highScores.forEach((score, index) => {
+        const entry = document.createElement('div')
+        entry.classList.add('high-score-entry')
+        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level - 1}`
+        highScoreList.appendChild(entry)
+    })
+}
+
+function updateHighScore() {
+    const playerName = prompt('Congratulations! You achieved a high score. Enter your name:')
+
+    if (playerName) {
+        const newScore = { level, playerName }
+        highScores.push(newScore)
+        highScores.sort((a, b) => b.level - a.level)
+        highScores = highScores.slice(0, 6)
+
+        localStorage.setItem('highScores', JSON.stringify(highScores))
+        updateHighScoreDisplay()
+    }
+}
+
+function handleResetGameLink() {
+    
+}
+
+function render() {
+    startButton.classList.add('hidden')
+    keyboardEl.classList.remove('hidden')
+    levelNumber.innerText = level + 1
+}
+
+// CONTROLLER //
+
 updateHighScoreDisplay()
 
 function handleKeyPress(event) {
@@ -207,26 +331,53 @@ function handleKeyPress(event) {
     }
 }
 
-function countdownReset() {
-    let count = 3
-
-    const countdownInterval = setInterval(() => {
-        if (count > 0) {
-            messageEl.innerText = count
-            count--
-        } else {
-            clearInterval(countdownInterval)
-            messageEl.innerText = "Here we go!!!"
-        }
-    }, 800)
-}
-
 function pickRandomKey() {
     const keys = Object.keys(keyboard)
     const randomIndex = Math.floor(Math.random() * keys.length)
     const randomKey = keys[randomIndex]
     keyPatternArray.push(randomKey)
     return randomKey
+}
+
+function handleKeyTone(keyInfo) {
+    playTone(keyInfo.tone,0.2)
+}
+
+function playTone(frequency, duration) {
+    if(isSoundOn) {
+        const oscillator = audioContext.createOscillator()
+        oscillator.type = 'sine'
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
+        oscillator.connect(audioContext.destination)
+        oscillator.start()
+        oscillator.stop(audioContext.currentTime + duration)
+    }
+}
+
+function playKeyPattern() {
+    userInteractionEnabled = false
+    computerTurn()
+    let i = 0
+    function playNextKey() {
+        const key = keyPatternArray[i]
+        const keyInfo = keyboard[key]
+        keyInfo.active = true
+        handleKeyColor(keyInfo)
+        handleKeyTone(keyInfo)
+        setTimeout(() => {
+            keyInfo.active = false
+            i++
+            if (i < keyPatternArray.length) {
+                setTimeout(playNextKey, 350)
+            } else {
+                setTimeout(() => {
+                    userInteractionEnabled = true
+                }, 200)
+                playerTurn()
+            }
+        }, 350)
+    }
+    playNextKey()
 }
 
 function checkWinProgress() {
@@ -262,31 +413,6 @@ function leveler() {
     userInteractionEnabled = false
 }
 
-function playKeyPattern() {
-    computerTurn()
-    let i = 0
-    function playNextKey() {
-        const key = keyPatternArray[i]
-        const keyInfo = keyboard[key]
-        keyInfo.active = true
-        handleKeyColor(keyInfo)
-        handleKeyTone(keyInfo)
-        setTimeout(() => {
-            keyInfo.active = false
-            i++
-            if (i < keyPatternArray.length) {
-                setTimeout(playNextKey, 350)
-            } else {
-                setTimeout(() => {
-                    userInteractionEnabled = true
-                }, 200)
-                playerTurn()
-            }
-        }, 350)
-    }
-    playNextKey()
-}
-
 function resetGame() {
     resetScores()
     render()
@@ -304,126 +430,47 @@ function getRandomMessage() {
     handleMessage(randomMessage)
 }
 
-function handleKeyColor(keyInfo) {
-    if (keyInfo.active === true) {
-        const keyEl = document.getElementById(keyInfo.label.toLowerCase())
-        keyEl.style.backgroundColor = keyInfo.color
-        keyEl.classList.add('active')
-        setTimeout(() => {
-            keyEl.style.backgroundColor = ''
-            keyEl.classList.remove('active')
-        }, 200)
+function getCurrentState() {
+    if (!startButton.classList.contains('hidden')) {
+        return 'start'
+    } else if (!levelButton.classList.contains('hidden')) {
+        return 'level'
+    } else if (!resetButton.classList.contains('hidden')) {
+        return 'reset'
+    } else {
+        return 'default'
     }
 }
 
-function handleKeyTone(keyInfo) {
-    // const keyEl = document.getElementById(keyInfo.label.toLowerCase())
-    playTone(keyInfo.tone,0.2)
+function handleResetGameLink() {
+    countdownReset()
+    handlePopup(null)
+    const currentState = getCurrentState()
+    setTimeout(() => {
+        switch (currentState) {
+            case 'start':
+                handleStartButton()
+                setTimeout(leveler, 500)
+                render()
+                break
+            case 'level':
+                resetGame()
+                handleLevelButton()
+                break
+            case 'reset':
+                handleResetButton()
+                resetGame()
+                break
+            default:
+                resetGame()
+        }
+    }, 2000)
 }
-
-function handleLevelButton() {
-    levelButton.classList.add('hidden')
-    levelNumber.innerText = level + 1
-}
-
-function handleResetButton() {
-    resetButton.classList.add('hidden')
-}
-
-function handleStartButton() {
-    buttonEl.style.marginBottom = '10vmin'
-}
-
-function handlePopup(selectedDiv) {
-    const isSameDiv = selectedDiv === popupContainerEl.querySelector('.popup-content:not(.hidden)')
-
-    if (!isSameDiv) {
-        howToPlayDivEl.classList.add('hidden')
-        sfxControlsDivEl.classList.add('hidden')
-        highScoreDivEl.classList.add('hidden')
-    }
-
-    if (selectedDiv) {
-        selectedDiv.classList.toggle('hidden')
-    }
-    popupContainerEl.classList.toggle('hidden', isSameDiv)
-}
-
-function nextLevel() {
-    levelButton.classList.remove('hidden')
-    messageEl.innerText = 'Would you like to proceed?'
-    // updateHighScore()
-}
-
-function playerTurn() {
-    messageEl.innerText = "Now it's your turn . . ."
-}
-
-function computerTurn() {
-    userInteractionEnabled = false
-    levelButton.classList.add('hidden')
-}
-
-function playTone(frequency, duration) {
-    if(isSoundOn) {
-        const oscillator = audioContext.createOscillator()
-        oscillator.type = 'sine'
-        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
-        oscillator.connect(audioContext.destination)
-        oscillator.start()
-        oscillator.stop(audioContext.currentTime + duration)
-    }
-}
-
-function playAgain() {
-    resetButton.classList.remove('hidden')
-}
-
-function losingMessage() {
-    messageEl.innerText = 'YOU LOST! \nWanna try again?'
-}
-
-function render() {
-    startButton.classList.add('hidden')
-    keyboardEl.classList.remove('hidden')
-    levelNumber.innerText = level + 1
-}
-
-function handleMessage(message) {
-    messageEl.innerText = message
-}
-
-
 
 function resetHighScores() {
     localStorage.removeItem('highScores')
     highScores = []
     updateHighScoreDisplay()
-}
-
-function updateHighScoreDisplay() {
-    highScoreList.innerHTML = ''
-
-    highScores.forEach((score, index) => {
-        const entry = document.createElement('div')
-        entry.classList.add('high-score-entry')
-        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level - 1}`
-        highScoreList.appendChild(entry)
-    })
-}
-
-function updateHighScore() {
-    const playerName = prompt('Congratulations! You achieved a high score. Enter your name:')
-
-    if (playerName) {
-        const newScore = { level, playerName }
-        highScores.push(newScore)
-        highScores.sort((a, b) => b.level - a.level)
-        highScores = highScores.slice(0, 6)
-
-        localStorage.setItem('highScores', JSON.stringify(highScores))
-        updateHighScoreDisplay()
-    }
 }
 
 function toggleSound() {
