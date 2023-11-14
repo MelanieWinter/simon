@@ -1,5 +1,5 @@
 /*----- constants -----*/
-const AudioContext = window.AudioContext || window.webkitAudioContext;
+const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioContext = new AudioContext()
 
 const keyboard = {
@@ -80,7 +80,7 @@ const resetGameLink = document.getElementById('resetGameLink')
 const highScoreDisplay = document.getElementById('highScoreDisplay')
 // const highScoreValue = document.getElementById('highScoreValue')
 const highScoreList = document.getElementById('highScoreList')
-const resetHighScoreButton = document.getElementById('resetHighScoreButton')
+const resetHighScoresButton = document.getElementById('resetHighScoresButton')
 const soundToggle = document.getElementById('check')
 
 /*----- event listeners -----*/
@@ -184,7 +184,7 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
-resetHighScoreButton.addEventListener('click', resetHighScore)
+resetHighScoresButton.addEventListener('click', resetHighScores)
 
 soundToggle.addEventListener('click', toggleSound)
 
@@ -208,7 +208,7 @@ function handleKeyPress(event) {
 }
 
 function countdownReset() {
-    let count = 3;
+    let count = 3
 
     const countdownInterval = setInterval(() => {
         if (count > 0) {
@@ -218,7 +218,7 @@ function countdownReset() {
             clearInterval(countdownInterval)
             messageEl.innerText = "Here we go!!!"
         }
-    }, 800);
+    }, 800)
 }
 
 function pickRandomKey() {
@@ -237,7 +237,9 @@ function checkWinProgress() {
             userInteractionEnabled = false
             losingMessage()
             playAgain()
-            updateHighScore() // CHECKING IF THIS WORKS!!!
+            if (level - 1 > getHighestLevel()) {
+                updateHighScore()
+            }
             return
         }
     }
@@ -245,6 +247,10 @@ function checkWinProgress() {
         userInteractionEnabled = false
         nextLevel()
     }
+}
+
+function getHighestLevel() {
+    return highScores.length > 0 ? highScores[0].level : 0
 }
 
 function leveler() {
@@ -387,62 +393,37 @@ function handleMessage(message) {
     messageEl.innerText = message
 }
 
-// function updateHighScore() {
-//     if (level > highScore) {
-//         if (level === 1) {
-//             highScore = level
-//         } else {
-//             highScore = level - 1
-//         }     
-//         localStorage.setItem('highScore', highScore)
-//         updateHighScoreDisplay()
-//     }
-// }
 
-// function updateHighScoreDisplay() {
-//     highScoreValue.textContent = highScore
-// }
 
-// function resetHighScore() {
-//     localStorage.removeItem('highScore')
-//     highScore = 0
-//     updateHighScoreDisplay()
-// }
-
-function updateHighScore(playerName) {
-    const newScore = { level, playerName };
-    highScores.push(newScore);
-    highScores.sort((a, b) => b.level - a.level); // Sort high scores in descending order
-    highScores = highScores.slice(0, 5); // Keep only the top 5 scores
-
-    localStorage.setItem('highScores', JSON.stringify(highScores));
-    updateHighScoreDisplay();
+function resetHighScores() {
+    localStorage.removeItem('highScores')
+    highScores = []
+    updateHighScoreDisplay()
 }
 
 function updateHighScoreDisplay() {
-    // highScoreList.innerHTML = ''; // Clear the previous entries
+    highScoreList.innerHTML = ''
 
     highScores.forEach((score, index) => {
-        const entry = document.createElement('div');
-        entry.classList.add('high-score-entry');
-        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level}`;
-        highScoreList.appendChild(entry);
-    });
+        const entry = document.createElement('div')
+        entry.classList.add('high-score-entry')
+        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level - 1}`
+        highScoreList.appendChild(entry)
+    })
 }
 
-/*----- updateHighScore() will now prompt for player name before updating the high score -----*/
 function updateHighScore() {
-    const playerName = prompt('Congratulations! You achieved a high score. Enter your name:');
-    if (playerName) {
-        updateHighScore(playerName);
-    }
-}
+    const playerName = prompt('Congratulations! You achieved a high score. Enter your name:')
 
-/*----- resetHighScore() will also reset highScores in addition to removing from localStorage -----*/
-function resetHighScore() {
-    localStorage.removeItem('highScores');
-    highScores = [];
-    updateHighScoreDisplay();
+    if (playerName) {
+        const newScore = { level, playerName }
+        highScores.push(newScore)
+        highScores.sort((a, b) => b.level - a.level)
+        highScores = highScores.slice(0, 6)
+
+        localStorage.setItem('highScores', JSON.stringify(highScores))
+        updateHighScoreDisplay()
+    }
 }
 
 function toggleSound() {

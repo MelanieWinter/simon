@@ -129,7 +129,7 @@ p {
     width: 25vmin;
     border: 1px solid red; 
     border-radius: 10%;
-    background: hsla(0, 95%, 47%, 0.237);
+    background: hsl(0 0% 100%/ 0.1);
     backdrop-filter: blur(1rem);
     color: red;
     position: relative;
