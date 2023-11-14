@@ -1,6 +1,9 @@
 /*----- constants -----*/
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioContext = new AudioContext()
+const gainNode = audioContext.createGain()
+gainNode.connect(audioContext.destination)
+const volumeControl = document.getElementById('volumeControl')
 
 const keyboard = {
     q: { label: 'Q', color: 'darksalmon', tone: 100, active: false},
@@ -356,10 +359,23 @@ function playTone(frequency, duration) {
         const oscillator = audioContext.createOscillator()
         oscillator.type = 'sine'
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
-        oscillator.connect(audioContext.destination)
+        oscillator.connect(gainNode)
         oscillator.start()
         oscillator.stop(audioContext.currentTime + duration)
     }
+}
+
+function toggleSound() {
+    isSoundOn = !isSoundOn
+}
+
+volumeControl.addEventListener('input', () => {
+    const volumeValue = parseFloat(volumeControl.value)
+    setVolume(volumeValue)
+})
+
+function setVolume(volume) {
+    gainNode.gain.setValueAtTime(volume, audioContext.currentTime)
 }
 
 function playKeyPattern() {
@@ -465,8 +481,4 @@ function resetHighScores() {
     localStorage.removeItem('highScores')
     highScores = []
     updateHighScoreDisplay()
-}
-
-function toggleSound() {
-    isSoundOn = !isSoundOn
 }

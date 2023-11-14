@@ -26,7 +26,7 @@
                     <a id="sfxControlsLink"><span aria-hidden="true">01</span>SFX Controls</a>
                 </li>
                 <li>
-                    <a id="highScoreLink"><span aria-hidden="true">02</span>High Score</a>
+                    <a id="highScoreLink"><span aria-hidden="true">02</span>High Scores</a>
                 </li>
                 <li>
                     <a id="resetGameLink" class="reset-game-link"><span aria-hidden="true">03</span>Reset Game</a>
@@ -43,7 +43,7 @@
                     ... Use your computer keyboard or the on-screen keys to play.
                     <br>... Follow the computer sequence to proceed to the next level.
                     <br>... Every level, the computer will add ONE additional key for you to repeat. 
-                    <br>... Get a high-level score and win acheivements!
+                    <br>... Get the highest-level and enter your name on the high scores list!
                 </p>
             </div>
             <div class="sfx-controls-div hidden" id="sfxControlsDiv">
@@ -52,8 +52,9 @@
                     <input type="checkbox" class="toggle" id="check">
                     <label for="check">Toggle Sound</label>
                 </p>
-                <p>
-                    Volume
+                <p class="volume">
+                    <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" class="slider"/>
+                    <label for="volumeControl">Volume</label>
                 </p>
             </div>
             <div class="high-score-div hidden" id="highScoreDiv">
