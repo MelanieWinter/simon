@@ -53,7 +53,8 @@ let level = 1
 let keyPatternArray = []
 let playerKeyPressArray = []
 let userInteractionEnabled = true
-let highScore = localStorage.getItem('highScore') || 0
+// let highScore = localStorage.getItem('highScore') || 0
+let highScores = JSON.parse(localStorage.getItem('highScores')) || []
 let isSoundOn = true
 
 /*----- cached elements  -----*/
@@ -77,7 +78,8 @@ const highScoreLink = document.getElementById('highScoreLink')
 const highScoreDivEl = document.getElementById('highScoreDiv')
 const resetGameLink = document.getElementById('resetGameLink')
 const highScoreDisplay = document.getElementById('highScoreDisplay')
-const highScoreValue = document.getElementById('highScoreValue')
+// const highScoreValue = document.getElementById('highScoreValue')
+const highScoreList = document.getElementById('highScoreList')
 const resetHighScoreButton = document.getElementById('resetHighScoreButton')
 const soundToggle = document.getElementById('check')
 
@@ -235,6 +237,7 @@ function checkWinProgress() {
             userInteractionEnabled = false
             losingMessage()
             playAgain()
+            updateHighScore() // CHECKING IF THIS WORKS!!!
             return
         }
     }
@@ -343,7 +346,7 @@ function handlePopup(selectedDiv) {
 function nextLevel() {
     levelButton.classList.remove('hidden')
     messageEl.innerText = 'Would you like to proceed?'
-    updateHighScore()
+    // updateHighScore()
 }
 
 function playerTurn() {
@@ -384,33 +387,64 @@ function handleMessage(message) {
     messageEl.innerText = message
 }
 
-function updateHighScore() {
-    if (level > highScore) {
-        if (level === 1) {
-            highScore = level
-        } else {
-            highScore = level - 1
-        }     
-        localStorage.setItem('highScore', highScore)
-        updateHighScoreDisplay()
-    }
+// function updateHighScore() {
+//     if (level > highScore) {
+//         if (level === 1) {
+//             highScore = level
+//         } else {
+//             highScore = level - 1
+//         }     
+//         localStorage.setItem('highScore', highScore)
+//         updateHighScoreDisplay()
+//     }
+// }
+
+// function updateHighScoreDisplay() {
+//     highScoreValue.textContent = highScore
+// }
+
+// function resetHighScore() {
+//     localStorage.removeItem('highScore')
+//     highScore = 0
+//     updateHighScoreDisplay()
+// }
+
+function updateHighScore(playerName) {
+    const newScore = { level, playerName };
+    highScores.push(newScore);
+    highScores.sort((a, b) => b.level - a.level); // Sort high scores in descending order
+    highScores = highScores.slice(0, 5); // Keep only the top 5 scores
+
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+    updateHighScoreDisplay();
 }
 
 function updateHighScoreDisplay() {
-    highScoreValue.textContent = highScore
+    // highScoreList.innerHTML = ''; // Clear the previous entries
+
+    highScores.forEach((score, index) => {
+        const entry = document.createElement('div');
+        entry.classList.add('high-score-entry');
+        entry.innerHTML = `<span class="rank">#${index + 1}</span> ${score.playerName}: Level ${score.level}`;
+        highScoreList.appendChild(entry);
+    });
 }
 
+/*----- updateHighScore() will now prompt for player name before updating the high score -----*/
+function updateHighScore() {
+    const playerName = prompt('Congratulations! You achieved a high score. Enter your name:');
+    if (playerName) {
+        updateHighScore(playerName);
+    }
+}
+
+/*----- resetHighScore() will also reset highScores in addition to removing from localStorage -----*/
 function resetHighScore() {
-    localStorage.removeItem('highScore')
-    highScore = 0
-    updateHighScoreDisplay()
+    localStorage.removeItem('highScores');
+    highScores = [];
+    updateHighScoreDisplay();
 }
 
 function toggleSound() {
-
-    if (!isSoundOn) {
-        isSoundOn = true
-    } else {
-        isSoundOn = false
-    }
+    isSoundOn = !isSoundOn
 }
