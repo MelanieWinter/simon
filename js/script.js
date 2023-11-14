@@ -79,7 +79,7 @@ const resetGameLink = document.getElementById('resetGameLink')
 const highScoreDisplay = document.getElementById('highScoreDisplay')
 const highScoreValue = document.getElementById('highScoreValue')
 const resetHighScoreButton = document.getElementById('resetHighScoreButton')
-const soundToggle = document.getElementById('soundToggle')
+const soundToggle = document.getElementById('check')
 
 /*----- event listeners -----*/
 startButton.addEventListener('click', () => {
