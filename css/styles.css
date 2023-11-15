@@ -485,7 +485,7 @@ input[type="checkbox"].toggle:focus + label::before {
     
     .button-container {
         width: 90vw;
-        margin-bottom: 37rem;
+        margin-bottom: 32rem;
     }
     
     .start-button {
@@ -519,32 +519,30 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .keyboard-container {
-        margin-bottom: 10rem;
-        margin-top: 9rem;
+        margin-bottom: 2.5rem;
+        margin-top: 10rem;
         width: 100vw;
     }
     
     .keyboard-row-1 {
         margin-bottom: 1vmin;
-        gap: 1vmin;
+        gap: .2rem;
     }
     
     .keyboard-row-2 {
-        margin-right: 3vmin;
         margin-bottom: 1vmin;
-        gap: 1vmin;
+        gap: .2rem;
     }
     
     .keyboard-row-3 {
-        margin-right: 13vmin;
         margin-bottom: 1vmin;
-        gap: 1vmin;
+        gap: .2rem;
     }
     
     .keyboard-container > div > div {
-        height: 5rem;
-        width: 2.8em;
-        border: 3px solid white;
+        height: 6rem;
+        width: 2.3em;
+        border: 2px solid white;
         border-radius: 10%;
         display: flex;
         justify-content: center;
@@ -575,6 +573,32 @@ input[type="checkbox"].toggle:focus + label::before {
         backdrop-filter: blur(1rem);
         color: red;
         position: relative;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        line-height: 1.5rem;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .popup-container {
+        width: 90%;
+        margin-bottom: 10rem;
+    }
+
+    .how-to-play-div,
+    .sfx-controls-div,
+    .high-score-div {
+        width: 80%;
+    }
+
+    .close-popup {
+        margin-top: 1.5rem;
+        width: 2rem;
     }
 }
 
