@@ -401,24 +401,6 @@ input[type="checkbox"].toggle:focus + label::before {
     0 0 0 5px rgba(184, 0, 96, .7);
 } 
 
-@media (min-width: 35em) and (max-width: 60em) {
-    .primary-logo {
-        padding-top: 2vmin;
-        font-size: 3.5em;
-    }
-
-    .primary-navigation li > [aria-hidden]{
-        display: none;
-    }
-}
-
-@media (min-width: 35em) {
-    .primary-navigation {
-        padding-block: 1.5rem;
-        padding-inline: clamp(4rem, 5vw, 10rem);
-    }
-}
-
 @media (max-width: 600px) {
     .primary-logo {
         font-size: 4em;
@@ -429,7 +411,7 @@ input[type="checkbox"].toggle:focus + label::before {
         gap: 2em;
         position: fixed;
         z-index: 1000;
-        inset: 0 0 0 38.5%;
+        inset: 0 0 0 60%;
         flex-direction: column;
         padding: min(35vh, 8rem) 2em;
         transform: translateX(100%);
@@ -458,12 +440,18 @@ input[type="checkbox"].toggle:focus + label::before {
         background-image: url("../assets/icon-close.svg");
     }
 
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
     .message-container {
         flex-direction: column;
     }
     
     .message {
-        margin-bottom: 3vmin;
+        /* margin-bottom: 2.5vmin; */
         text-align: center;
         font-size: 1.5em;
         font-weight: 200;
@@ -484,7 +472,7 @@ input[type="checkbox"].toggle:focus + label::before {
     
     .button-container {
         width: 90vw;
-        margin-bottom: 32rem;
+        /* margin-bottom: 32rem; */
     }
     
     .level-button,
@@ -499,23 +487,23 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .keyboard-container {
-        margin-bottom: 2.5rem;
-        margin-top: 10rem;
+        margin-bottom: -3rem;
+        /* margin-top: 10rem; */
         width: 100vw;
     }
     
     .keyboard-row-1 {
-        margin-bottom: 1vmin;
+        /* margin-bottom: 1vmin; */
         gap: .2rem;
     }
     
     .keyboard-row-2 {
-        margin-bottom: 1vmin;
+        /* margin-bottom: 1vmin; */
         gap: .2rem;
     }
     
     .keyboard-row-3 {
-        margin-bottom: 1vmin;
+        /* margin-bottom: 1vmin; */
         gap: .2rem;
     }
     
@@ -543,7 +531,7 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .high-score-div > button {
-        margin-top: 9vmin;
+        /* margin-top: 9vmin; */
         width: 90%;
         height: 2rem;
         border: 1px solid red; 
@@ -597,18 +585,412 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 }
 
-/* @media (min-width: 600px) {
+@media (min-width: 600px) {
+    .primary-logo {
+        padding-top: 1rem;
+        font-size: 2em;
+        min-width: 5rem;
+        max-width: 5rem;
+    }
 
+    .primary-navigation {
+        margin-top: 1rem;
+        padding-block: 1.5rem;
+        padding-inline: clamp(1.5rem, 2rem, 3.6rem);
+        gap: 1.5rem;
+    }
+
+    .primary-navigation a > [aria-hidden]{
+        display: none;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .popup-container {
+        width: 85%;
+        margin-top: 2rem;
+    }
+
+    .how-to-play-div,
+    .sfx-controls-div,
+    .high-score-div {
+        width: 95%;
+        justify-content: space-evenly;
+    }
+
+    .high-score-div > button {
+        width: 40%;
+    }
+
+    .close-popup {
+        width: 1.8rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        line-height: 1.5rem;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .message-container {
+        flex-direction: column;
+    }
+    
+    .message {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 200;
+        position: relative;
+    }
+    
+    .message:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(251, 251, 251, 0.153);
+        border-radius: 100%;
+        z-index: -1;
+    }
+    
+    .button-container {
+        width: 30vw;
+    }
+    
+    .level-button,
+    .reset-button,
+    .start-button {
+        width: 100%;
+        border: 1px solid white; 
+        border-radius: 10%;
+        background: hsl(0 0% 0%/ 0.1);
+        color: white;
+        position: relative;
+    }
+
+    .keyboard-container {
+        margin-bottom: -3rem;
+        width: 100vw;
+    }
+    
+    .keyboard-row-1,
+    .keyboard-row-2,
+    .keyboard-row-3 {
+        gap: .2rem;
+    }
+    
+    .keyboard-container > div > div {
+        height: 3.5rem;
+        width: 3.5rem;
+        border: 2px solid white;
+        border-radius: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    
+    .keyboard-container > div > div::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: hsl(0 0% 0%/ 0.1);
+        border-radius: 10%;
+        z-index: -1;
+    }
+
+    @supports (backdrop-filter: blur(1rem)) {
+        .primary-navigation,
+        .high-score-div > button,
+        .keyboard-container > div > div::before,
+        .level-button,
+        .reset-button,
+        .start-button {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
+    
+        .message:before {
+            background-color: rgba(251, 251, 251, 0.153);
+            filter: blur(15px);
+        }
+    }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 780px) {
+    .primary-logo {
+        padding-top: 2vmin;
+        font-size: 3em;
+        max-width: 3em;
+    }
 
+    .primary-navigation {
+        padding-block: 2rem;
+        padding-inline: 3rem;
+        gap: 1.5rem;
+    }
+
+    .primary-navigation a > [aria-hidden]{
+        display: inline;
+        margin-right: 0.3rem;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .message-container {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+    
+    .message {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 200;
+        position: relative;
+    }
+    
+    .message:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(251, 251, 251, 0.153);
+        border-radius: 100%;
+        z-index: -1;
+    }
+    
+    .button-container {
+        width: 18vw;
+    }
+    
+    .level-button,
+    .reset-button,
+    .start-button {
+        width: 100%;
+        border: 1px solid white; 
+        border-radius: 10%;
+        background: hsl(0 0% 0%/ 0.1);
+        color: white;
+        position: relative;
+    }
+
+    .keyboard-container {
+        /* margin-bottom: 1rem; */
+        width: 100vw;
+    }
+    
+    .keyboard-row-1,
+    .keyboard-row-2,
+    .keyboard-row-3 {
+        gap: .3rem;
+    }
+    
+    .keyboard-container > div > div {
+        height: 4.5rem;
+        width: 4.5rem;
+        border: 2px solid white;
+        border-radius: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    
+    .keyboard-container > div > div::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: hsl(0 0% 0%/ 0.1);
+        border-radius: 10%;
+        z-index: -1;
+    }
+
+    @supports (backdrop-filter: blur(1rem)) {
+        .primary-navigation,
+        .high-score-div > button,
+        .keyboard-container > div > div::before,
+        .level-button,
+        .reset-button,
+        .start-button {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
+    
+        .message:before {
+            background-color: rgba(251, 251, 251, 0.153);
+            filter: blur(15px);
+        }
+    }
 }
 
 @media (min-width: 992px) {
+    .primary-logo {
+        padding-top: 2vmin;
+        font-size: 4rem;
+        min-width: 20rem;
+    }
 
+    .primary-navigation {
+        padding-block: 1.5rem;
+        padding-inline: 3rem;
+        gap: 2rem;
+    }
+
+    .primary-navigation a > [aria-hidden]{
+        display: inline;
+        margin-right: 0.5rem;
+    }
+
+    .popup-container {
+        width: 60%;
+        margin-top: 2rem;
+    }
+
+    .how-to-play-div,
+    .sfx-controls-div,
+    .high-score-div {
+        width: 95%;
+        justify-content: space-evenly;
+    }
+
+    .high-score-div > button {
+        width: 35%;
+    }
+
+    .close-popup {
+        width: 1.8rem;
+        margin-top: 2rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        line-height: 1.5rem;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .message-container {
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+    
+    .message {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 200;
+        position: relative;
+    }
+    
+    .message:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(251, 251, 251, 0.153);
+        border-radius: 100%;
+        z-index: -1;
+    }
+    
+    .button-container {
+        width: 18vw;
+    }
+    
+    .level-button,
+    .reset-button,
+    .start-button {
+        width: 100%;
+        border: 1px solid white; 
+        border-radius: 10%;
+        background: hsl(0 0% 0%/ 0.1);
+        color: white;
+        position: relative;
+    }
+
+    .keyboard-container {
+        margin-bottom: 0.2rem;
+        width: 100vw;
+    }
+    
+    .keyboard-row-1,
+    .keyboard-row-2,
+    .keyboard-row-3 {
+        gap: 0.5rem;
+    }
+    
+    .keyboard-container > div > div {
+        height: 5.5rem;
+        width: 5.5rem;
+        border: 2px solid white;
+        border-radius: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    
+    .keyboard-container > div > div::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: hsl(0 0% 0%/ 0.1);
+        border-radius: 10%;
+        z-index: -1;
+    }
+
+    @supports (backdrop-filter: blur(1rem)) {
+        .primary-navigation,
+        .high-score-div > button,
+        .keyboard-container > div > div::before,
+        .level-button,
+        .reset-button,
+        .start-button {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
+    
+        .message:before {
+            background-color: rgba(251, 251, 251, 0.153);
+            filter: blur(15px);
+        }
+    }
 }
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
 
 } */
