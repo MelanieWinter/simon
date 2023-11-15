@@ -61,21 +61,208 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 
 ### High Score
 
-![Prompt For High Score](./assets/prompt.png)
-![High Scores](./assets/high-scores.png)
+![Prompt for high score](./assets/prompt.png)
+![High scores](./assets/high-scores.png)
 
 ### SFX Controls
 
-![SFX Controls](./assets/sfx-controls.png)
+![SFX controls](./assets/sfx-controls.png)
 
 ## User Stories
 
-- AAU, I want the option to directly click on elements on screen, or use my keyboard to access them.
+1. AAU, I want the option use my computer keyboard or the onscreen keys to play the game.
 
-![Click or Press](./assets/click-press.png)
+```js
+keyEls.forEach((keyEl) => {
+  keyEl.addEventListener("click", () => {
+    handleKeyPress({ key: keyEl.id });
+  });
+});
 
--
--
+document.addEventListener("keydown", handleKeyPress);
+
+function handleKeyPress(event) {
+  const key = event.key || event.target.id;
+  if (keyboard.hasOwnProperty(key) && userInteractionEnabled) {
+    playerKeyPressArray.push(key);
+    const keyInfo = keyboard[key];
+    keyInfo.active = true;
+    handleKeyColor(keyInfo);
+    handleKeyTone(keyInfo);
+    setTimeout(() => {
+      checkWinProgress();
+      keyInfo.active = false;
+    }, 200);
+  }
+}
+```
+
+2. AAU, I want a randomize computer sequence to play.
+
+```js
+function pickRandomKey() {
+  const keys = Object.keys(keyboard);
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  const randomKey = keys[randomIndex];
+  keyPatternArray.push(randomKey);
+  return randomKey;
+}
+```
+
+3. AAU, I want to level up every time I get the computer sequence correct.
+
+```js
+function leveler() {
+  level++;
+  playerKeyPressArray = [];
+  pickRandomKey(keyboard);
+  setTimeout(() => {
+    playKeyPattern();
+  }, 500);
+  getRandomMessage();
+  userInteractionEnabled = false;
+}
+```
+
+4. AAU, I want a high score display so I can see how good everyone in my house is at this game.
+
+```js
+function updateHighScoreDisplay() {
+  highScoreList.innerHTML = "";
+  highScores.forEach((score, index) => {
+    const entry = document.createElement("div");
+    entry.classList.add("high-score-entry");
+    const rankContent = index === 0 ? "🏆" : `#${index + 1}`;
+
+    entry.innerHTML = `<span class="rank">${rankContent}</span> ${
+      score.playerName
+    }: Level ${score.level - 1}`;
+    highScoreList.appendChild(entry);
+  });
+}
+
+function updateHighScore() {
+  const playerName = prompt(
+    "Congratulations! You achieved a high score. Enter your name:"
+  );
+
+  if (playerName) {
+    const newScore = { level, playerName };
+    highScores.push(newScore);
+    highScores.sort((a, b) => b.level - a.level);
+    highScores = highScores.slice(0, 6);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    updateHighScoreDisplay();
+  }
+}
+```
+
+5. AAU, I want the keys to illuminate and play a tone during the sequence.
+
+```js
+function handleKeyColor(keyInfo) {
+  if (keyInfo.active === true) {
+    const keyEl = document.getElementById(keyInfo.label.toLowerCase());
+    keyEl.style.backgroundColor = keyInfo.color;
+    keyEl.classList.add("active");
+    setTimeout(() => {
+      keyEl.style.backgroundColor = "";
+      keyEl.classList.remove("active");
+    }, 200);
+  }
+}
+
+function handleKeyTone(keyInfo) {
+  playTone(keyInfo.tone, 0.2);
+}
+
+function playTone(frequency, duration) {
+  if (isSoundOn) {
+    const oscillator = audioContext.createOscillator();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    oscillator.connect(gainNode);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+  }
+}
+```
+
+6. AAU, I want my keys to be locked while the computer sequence is playing.
+
+```js
+function playKeyPattern() {
+  userInteractionEnabled = false;
+  gamePhase = "default";
+  computerTurn();
+  let i = 0;
+  function playNextKey() {
+    const key = keyPatternArray[i];
+    const keyInfo = keyboard[key];
+    keyInfo.active = true;
+    handleKeyColor(keyInfo);
+    handleKeyTone(keyInfo);
+    setTimeout(() => {
+      keyInfo.active = false;
+      i++;
+      if (i < keyPatternArray.length) {
+        setTimeout(playNextKey, 350);
+      } else {
+        setTimeout(() => {
+          userInteractionEnabled = true;
+        }, 200);
+        playerTurn();
+      }
+    }, 350);
+  }
+  playNextKey();
+}
+```
+
+7. AAU, I want my input to be cross-referenced with the computer sequence. If it's not the same, the game should end immediately.
+
+```js
+function checkWinProgress() {
+  const partialPattern = keyPatternArray.slice(0, playerKeyPressArray.length);
+
+  for (let i = 0; i < playerKeyPressArray.length; i++) {
+    if (playerKeyPressArray[i] !== partialPattern[i]) {
+      userInteractionEnabled = false;
+      gamePhase = "reset";
+      losingMessage();
+      playAgain();
+      if (level - 1 > getHighestLevel()) {
+        updateHighScore();
+      }
+      return;
+    }
+  }
+  if (playerKeyPressArray.length === keyPatternArray.length) {
+    userInteractionEnabled = false;
+    gamePhase = "level";
+    nextLevel();
+    return;
+  }
+}
+```
+
+8. AAU, I want to be able to lower the volume or completely turn off the sounds for the key tones.
+
+```js
+function toggleSound() {
+  isSoundOn = !isSoundOn;
+}
+
+volumeControl.addEventListener("input", () => {
+  const volumeValue = parseFloat(volumeControl.value);
+  setVolume(volumeValue);
+});
+
+function setVolume(volume) {
+  gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+}
+```
 
 ## Next Steps
 
