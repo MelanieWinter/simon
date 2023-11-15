@@ -1,5 +1,4 @@
 // CONSTANTS //
-
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioContext = new AudioContext()
 const gainNode = audioContext.createGain()
@@ -7,7 +6,6 @@ gainNode.connect(audioContext.destination)
 const volumeControl = document.getElementById('volumeControl')
 
 // MODEL //
-
 const keyboard = {
     q: { label: 'Q', color: 'darksalmon', tone: 100, active: false},
     w: { label: 'W', color: 'bisque', tone: 110, active: false },
@@ -92,7 +90,6 @@ const resetHighScoresButton = document.getElementById('resetHighScoresButton')
 const soundToggle = document.getElementById('check')
 
 // EVENT LISTENERS //
-
 startButton.addEventListener('click', () => {
     handleStartButton()
     setTimeout(leveler, 500)
@@ -212,7 +209,6 @@ resetHighScoresButton.addEventListener('click', resetHighScores)
 soundToggle.addEventListener('click', toggleSound)
 
 // VIEW //
-
 function handleKeyColor(keyInfo) {
     if (keyInfo.active === true) {
         const keyEl = document.getElementById(keyInfo.label.toLowerCase())
@@ -329,7 +325,6 @@ function render() {
 }
 
 // CONTROLLER //
-
 updateHighScoreDisplay()
 
 function handleKeyPress(event) {
