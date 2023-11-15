@@ -20,9 +20,22 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 
 [> > Play The Game Here! < <](melaniewinter.github.io/ty.mon-says/)
 
+### Controls
+
+- Utilize your computer keyboard or the onscreen buttons to follow the sequences.
+- The "Start", "Next Level", and "Play Again" buttons can all be clicked on directly, or just press "Enter" on your keyboard.
+- You can click on the nav bar, or, open the associated popup with number associated with each element.
+  - 0: How to Play
+  - 1: SFX Controls
+  - 2: High Scores
+  - 3: Reset Game (PLEASE NOTE: Reset game is locked in the start screen)
+- Close the popup with the "X" at the bottom, or the "Escape" key on your keyboard.
+
+### How to Play
+
 1. Click "Start Game" to begin level 1.
 2. The computer will play its first sequence of one key. Make sure you memorize this key!
-3. When the computer sequence is over, it's the player's turn. Click the tile the computer demonstrated before.
+3. When the computer sequence is over, it's the player's turn. Click the key the computer demonstrated before.
 4. If you successfully matched the computer sequence, you will be prompted to proceed the next level.
 5. In each level, the computer will add an additional key to the sequence.
 6. Continue matching the computers sequence to proceed to the next level.
@@ -57,7 +70,10 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 
 ## User Stories
 
--
+- AAU, I want the option to directly click on elements on screen, or use my keyboard to access them.
+
+![Click or Press](./assets/click-press.png)
+
 -
 -
 
