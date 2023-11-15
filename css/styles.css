@@ -567,11 +567,10 @@ input[type="checkbox"].toggle:focus + label::before {
         margin-top: 9vmin;
         width: 90%;
         height: 2rem;
-        border: 1px solid white; 
+        border: 1px solid red; 
         border-radius: 10%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
-        color: white;
+        background: hsl(0 0% 0%/ 0.35);
+        color: red;
         position: relative;
     }
 
@@ -588,7 +587,6 @@ input[type="checkbox"].toggle:focus + label::before {
     .popup-container {
         width: 90%;
         margin-bottom: 10rem;
-        background-color: rgba(185, 25, 81, 0.5);
     }
 
     .how-to-play-div,
@@ -600,6 +598,18 @@ input[type="checkbox"].toggle:focus + label::before {
     .close-popup {
         margin-top: 1.5rem;
         width: 2rem;
+    }
+
+    @supports (backdrop-filter: blur(1rem)) {
+        .primary-navigation {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
+
+        .high-score-div > button {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
     }
 }
 
