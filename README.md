@@ -28,7 +28,7 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
   - 0: How to Play
   - 1: SFX Controls
   - 2: High Scores
-  - 3: Reset Game <i>(PLEASE NOTE: Reset game is locked in the start screen)</i>
+  - 3: Reset Game <i>(PLEASE NOTE: This reset functionality is locked in the start screen)</i>
 - Close the popup with the "X" at the bottom, or the "Escape" key on your keyboard.
 
 ### How to Play
@@ -97,7 +97,7 @@ function handleKeyPress(event) {
 }
 ```
 
-2. AAU, I want a randomize computer sequence to play.
+2. AAU, I want a randomized computer sequence to play.
 
 ```js
 function pickRandomKey() {
