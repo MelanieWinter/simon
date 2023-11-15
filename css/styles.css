@@ -569,8 +569,7 @@ input[type="checkbox"].toggle:focus + label::before {
         height: 2rem;
         border: 1px solid red; 
         border-radius: 10%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
+        background: hsl(0 0% 0%/ 0.35);
         color: red;
         position: relative;
     }
@@ -599,6 +598,18 @@ input[type="checkbox"].toggle:focus + label::before {
     .close-popup {
         margin-top: 1.5rem;
         width: 2rem;
+    }
+
+    @supports (backdrop-filter: blur(1rem)) {
+        .primary-navigation {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
+
+        .high-score-div > button {
+            background: hsl(0 0% 100%/ 0.1);
+            backdrop-filter: blur(1rem);
+        }
     }
 }
 
