@@ -203,8 +203,6 @@ p {
     justify-content: center;
 }
 
-
-
 main {
     flex-grow: 1;
     display: flex;
@@ -403,8 +401,6 @@ input[type="checkbox"].toggle:focus + label::before {
     0 0 0 5px rgba(184, 0, 96, .7);
 } 
 
-
-
 @media (min-width: 35em) and (max-width: 60em) {
     .primary-logo {
         padding-top: 2vmin;
@@ -462,24 +458,15 @@ input[type="checkbox"].toggle:focus + label::before {
         background-image: url("../assets/icon-close.svg");
     }
 
-    main {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: flex-end; */
-        align-items: center;
-    }
-    
     .message-container {
         flex-direction: column;
     }
     
     .message {
-        width: 75%;
-        margin-bottom: 3rem;
+        margin-bottom: 3vmin;
         text-align: center;
-        font-size: 1.5rem;
-        font-weight: 300;
+        font-size: 1.5em;
+        font-weight: 200;
         position: relative;
     }
     
@@ -497,28 +484,33 @@ input[type="checkbox"].toggle:focus + label::before {
     }
     
     .button-container {
-        /* height: 15vmin; */
         width: 90vw;
-        margin-bottom: 15rem;
+        margin-bottom: 37rem;
     }
     
     .start-button {
-        /* height: 10vmin; */
         width: 100%;
-        border: 1.5px solid white; 
+        border: 1px solid white; 
         border-radius: 10%;
         background: hsl(0 0% 100%/ 0.1);
         backdrop-filter: blur(1rem);
         color: white;
         position: relative;
-        font-size: 2rem;
     }
     
-    .level-button,
-    .reset-button {
-        /* height: 8vmin; */
+    .level-button {
         width: 100%;
-        border: 1.5px solid white; 
+        border: 1px solid white; 
+        border-radius: 10%;
+        background: hsl(0 0% 100%/ 0.1);
+        backdrop-filter: blur(1rem);
+        color: white;
+        position: relative;
+    }
+    
+    .reset-button {
+        width: 100%;
+        border: 1px solid white; 
         border-radius: 10%;
         background: hsl(0 0% 100%/ 0.1);
         backdrop-filter: blur(1rem);
@@ -527,12 +519,9 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .keyboard-container {
-        display: flex;
-        margin-bottom: 20rem;
-        width: 95%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        margin-bottom: 10rem;
+        margin-top: 9rem;
+        width: 100vw;
     }
     
     .keyboard-row-1 {
@@ -541,20 +530,20 @@ input[type="checkbox"].toggle:focus + label::before {
     }
     
     .keyboard-row-2 {
-        /* margin-right: 3vmin; */
+        margin-right: 3vmin;
         margin-bottom: 1vmin;
         gap: 1vmin;
     }
     
     .keyboard-row-3 {
-        /* margin-right: 13vmin; */
+        margin-right: 13vmin;
         margin-bottom: 1vmin;
         gap: 1vmin;
     }
     
     .keyboard-container > div > div {
-        /* height: 5rem; */
-        width: 3.3rem;
+        height: 5rem;
+        width: 2.8em;
         border: 3px solid white;
         border-radius: 10%;
         display: flex;
@@ -576,37 +565,20 @@ input[type="checkbox"].toggle:focus + label::before {
         z-index: -1;
     }
 
-    .popup-container {
-        /* height: 50vh; */
-        width: 90vw;
-        background: hsl(0 0% 100%/ 0.3);
+    .high-score-div > button {
+        margin-top: 9vmin;
+        width: 90%;
+        height: 2rem;
+        border: 1px solid red; 
+        border-radius: 10%;
+        background: hsl(0 0% 100%/ 0.1);
         backdrop-filter: blur(1rem);
-        flex-direction: column;
-        position: absolute;
-        margin-bottom: 20rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9000;
-    }
-    
-    .popup-container > div {
-        text-align: center;
-    }
-    
-    .close-popup {
-        width: 3rem;
-        margin-top: 4rem;
-        border: 3px solid white;
-        border-radius: 100%;
-    }
-    
-    .close-popup:hover {
-        cursor: pointer;
+        color: red;
+        position: relative;
     }
 }
 
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
 
 }
 
@@ -620,4 +592,4 @@ input[type="checkbox"].toggle:focus + label::before {
 
 @media (min-width: 1200px) {
 
-}
+} */
