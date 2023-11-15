@@ -567,11 +567,11 @@ input[type="checkbox"].toggle:focus + label::before {
         margin-top: 9vmin;
         width: 90%;
         height: 2rem;
-        border: 1px solid red; 
+        border: 1px solid white; 
         border-radius: 10%;
         background: hsl(0 0% 100%/ 0.1);
         backdrop-filter: blur(1rem);
-        color: red;
+        color: white;
         position: relative;
     }
 
@@ -588,6 +588,7 @@ input[type="checkbox"].toggle:focus + label::before {
     .popup-container {
         width: 90%;
         margin-bottom: 10rem;
+        background-color: rgba(185, 25, 81, 0.5);
     }
 
     .how-to-play-div,
