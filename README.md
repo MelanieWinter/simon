@@ -28,7 +28,7 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
   - 0: How to Play
   - 1: SFX Controls
   - 2: High Scores
-  - 3: Reset Game (PLEASE NOTE: Reset game is locked in the start screen)
+  - 3: Reset Game <i>(PLEASE NOTE: Reset game is locked in the start screen)</i>
 - Close the popup with the "X" at the bottom, or the "Escape" key on your keyboard.
 
 ### How to Play
@@ -269,4 +269,4 @@ function setVolume(volume) {
 - Adding different modes for difficulty
 - Having the high scores be server based, rather than local
 - Implement better accessibility functionality
-- Make the layoug more responsive for small screens
+- Make the layout more responsive for small screens
