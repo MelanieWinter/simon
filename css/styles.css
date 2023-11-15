@@ -5,7 +5,7 @@
 }
 
 body {
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     background-image: url("../assets/simon-background.svg");
     background-repeat: no-repeat;
@@ -478,7 +478,6 @@ input[type="checkbox"].toggle:focus + label::before {
         width: 50%;
         height: 100%;
         background-color: rgba(251, 251, 251, 0.153);
-        filter: blur(15px);
         border-radius: 100%;
         z-index: -1;
     }
@@ -488,32 +487,13 @@ input[type="checkbox"].toggle:focus + label::before {
         margin-bottom: 32rem;
     }
     
+    .level-button,
+    .reset-button,
     .start-button {
         width: 100%;
         border: 1px solid white; 
         border-radius: 10%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
-        color: white;
-        position: relative;
-    }
-    
-    .level-button {
-        width: 100%;
-        border: 1px solid white; 
-        border-radius: 10%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
-        color: white;
-        position: relative;
-    }
-    
-    .reset-button {
-        width: 100%;
-        border: 1px solid white; 
-        border-radius: 10%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
+        background: hsl(0 0% 0%/ 0.1);
         color: white;
         position: relative;
     }
@@ -557,8 +537,7 @@ input[type="checkbox"].toggle:focus + label::before {
         left: 0;
         width: 100%;
         height: 100%;
-        background: hsl(0 0% 100%/ 0.1);
-        backdrop-filter: blur(1rem);
+        background: hsl(0 0% 0%/ 0.1);
         border-radius: 10%;
         z-index: -1;
     }
@@ -601,14 +580,19 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     @supports (backdrop-filter: blur(1rem)) {
-        .primary-navigation {
+        .primary-navigation,
+        .high-score-div > button,
+        .keyboard-container > div > div::before,
+        .level-button,
+        .reset-button,
+        .start-button {
             background: hsl(0 0% 100%/ 0.1);
             backdrop-filter: blur(1rem);
         }
-
-        .high-score-div > button {
-            background: hsl(0 0% 100%/ 0.1);
-            backdrop-filter: blur(1rem);
+    
+        .message:before {
+            background-color: rgba(251, 251, 251, 0.153);
+            filter: blur(15px);
         }
     }
 }

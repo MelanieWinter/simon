@@ -6,7 +6,7 @@
 
 Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is, you have a full keyboard to memorize, instead of just a few buttons. Good luck!
 
-## Technologies Used
+## Tech Stack
 
 <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
@@ -18,7 +18,7 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 
 ## Getting Started
 
-[> > Play The Game Here! < <](melaniewinter.github.io/ty.mon-says/)
+[> > Play The Game Here! < <](https://melaniewinter.github.io/ty.mon-says/)
 
 ### Controls
 
