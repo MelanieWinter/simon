@@ -23,8 +23,8 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 ### Controls
 
 - Utilize your computer keyboard or the onscreen buttons to follow the sequences.
-- The "Start", "Next Level", and "Play Again" buttons can all be clicked on directly, or just press "Enter" on your keyboard.
-- You can click on the nav bar, or, open the associated popup with number associated with each element.
+- The "Start", "Next Level", and "Play Again" buttons can all be clicked on directly, or just press the "Enter" key on your keyboard.
+- You can click on the nav bar, or, open the associated popup by pressing the number on your keyboard associated with each element.
   - 0: How to Play
   - 1: SFX Controls
   - 2: High Scores
@@ -39,11 +39,11 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 4. If you successfully matched the computer sequence, you will be prompted to proceed the next level.
 5. In each level, the computer will add an additional key to the sequence.
 6. Continue matching the computers sequence to proceed to the next level.
-7. If you mess up the sequence, a button will appear asking if you would like to replay the game.
+7. If your sequence is not exactly the same, a button will appear asking if you would like to replay the game.
 
    - Each game has a totally randomized computer sequence.
 
-8. If you achieved the highest level on your computer, a prompt will appear for you to type in your name.
+8. If you achieved the highest level on your computer's localized memory, a prompt will appear for you to type in your name.
 
    - High scores can be viewed in the "High Scores" section of the navigation bar.
 
@@ -128,7 +128,7 @@ function leveler() {
 }
 ```
 
-4. AAU, I want a high score display so I can see how good everyone in my house is at this game.
+4. AAU, I want a high score display so I can be competetitive with my housemates.
 
 ```js
 function updateHighScoreDisplay() {
@@ -251,7 +251,7 @@ function checkWinProgress() {
 }
 ```
 
-8. AAU, I want to be able to lower the volume or completely turn off the sounds for the key tones.
+8. AAU, I want to be able to lower the volume or completely turn off the key tones.
 
 ```js
 function toggleSound() {
@@ -272,5 +272,5 @@ function setVolume(volume) {
 
 - Adding different modes for difficulty
 - Having the high scores be server based, rather than local
-- Implement better accessibility functionality
-- Make the layout more responsive for small screens
+- Implement better accessibility features
+- Make the layout more responsive for mobile
