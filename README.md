@@ -51,6 +51,10 @@ Ty.Mon Says is a 'copy the sequence' type of game, just like SIMON. The twist is
 
 ## Screen Shots
 
+### Responsive Design
+
+![Responsive Design](./assets/responsive.gif)
+
 ### Player's Turn
 
 ![Player Turn](./assets/game-screen.png)
