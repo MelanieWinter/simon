@@ -45,7 +45,7 @@ nav {
     padding-block: 2rem;
     padding-inline: 3rem;
     gap: 4rem;
-    background: hsl(0 0% 100%/ 0.1);
+    background: hsl(0 0% 0%/ 0.79);
     list-style: none;
     font-weight: 300;
 }
@@ -76,7 +76,7 @@ nav {
     z-index: 9000;
     height: 25rem;
     width: 50vw;
-    background: hsl(0 0% 100%/ 0.1);
+    background: hsl(0 0% 0%/ 0.79);
 }
 
 .close-popup {
@@ -118,6 +118,7 @@ ol li {
     border: 2px solid red; 
     border-radius: 25px;
     background: hsl(0 0% 100%/ 0.75);
+    backdrop-filter: blur(1rem);
     color: red;
     font-size: 1rem;
 }
@@ -373,12 +374,12 @@ input[type="checkbox"].toggle:focus + label::before {
 @supports (backdrop-filter: blur(1rem)) {
     .primary-navigation,
     .popup-container,
-    .high-score-div > button,
     .keyboard-container > div > div::before,
     .start-button::before,
-.level-button::before,
-.reset-button::before {
+    .level-button::before,
+    .reset-button::before {
         backdrop-filter: blur(1rem);
+        background: hsl(0 0% 100%/ 0.1);
     }
 }
 
@@ -422,6 +423,17 @@ input[type="checkbox"].toggle:focus + label::before {
         background-image: url("../assets/icon-close.svg");
     }
 
+    .popup-container {
+        top: 25%;
+        right: 0;
+        height: 80vmin;
+        width: 100vmin;
+    }
+
+    .high-score-div > button {
+        background: hsl(0 0% 100%/ 0.75);
+    }
+
     .message-container {
         margin-top: 20vmin;
     }
@@ -443,7 +455,7 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .keyboard-container {
-        top: 55%
+        top: 55%;
     }
 
     .keyboard-container > div > div {
@@ -483,6 +495,18 @@ input[type="checkbox"].toggle:focus + label::before {
 
     .primary-navigation a > [aria-hidden = "true"] {
         display: none;
+    }
+
+    .popup-container {
+        top: 30%;
+        right: 0;
+        height: 50vmin;
+        width: 100vmin;
+    }
+
+    .high-score-div > button {
+        top: 4rem;
+        background: hsl(0 0% 100%/ 0.75);
     }
 
     .message-container {
@@ -548,6 +572,13 @@ input[type="checkbox"].toggle:focus + label::before {
         display: none;
     }
 
+    .popup-container {
+        top: 25%;
+        right: 15%;
+        height: 50vmin;
+        width: 70vmin;
+    }
+
     .keyboard-container {
         top: 68%;
     }
@@ -568,6 +599,13 @@ input[type="checkbox"].toggle:focus + label::before {
         padding-block: 1.5rem;
         padding-inline: 1.5rem;
         gap: 1.5rem;
+    }
+
+    .popup-container {
+        top: 25%;
+        right: 25%;
+        height: 55vmin;
+        width: 70vmin;
     }
 
     .keyboard-container > div > div {
