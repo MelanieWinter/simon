@@ -430,10 +430,6 @@ input[type="checkbox"].toggle:focus + label::before {
         width: 100vmin;
     }
 
-    .high-score-div > button {
-        background: hsl(0 0% 100%/ 0.75);
-    }
-
     .message-container {
         margin-top: 20vmin;
     }
@@ -506,7 +502,6 @@ input[type="checkbox"].toggle:focus + label::before {
 
     .high-score-div > button {
         top: 4rem;
-        background: hsl(0 0% 100%/ 0.75);
     }
 
     .message-container {
@@ -626,11 +621,3 @@ input[type="checkbox"].toggle:focus + label::before {
         gap: 2rem;
     }
 }
-
-/* 
-
-- media query for extra tall screens like phones
-- media query for langscape mode phones
-- tablet portrait and landscape modes
-
-*/
