@@ -423,7 +423,7 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .message-container {
-        margin-top: 18%;
+        margin-top: 20vmin;
     }
 
     .message {
@@ -486,7 +486,7 @@ input[type="checkbox"].toggle:focus + label::before {
     }
 
     .message-container {
-        margin-top: 20%;
+        margin-top: 19vmin;
     }
 
     .message {
@@ -570,10 +570,6 @@ input[type="checkbox"].toggle:focus + label::before {
         gap: 1.5rem;
     }
 
-    .keyboard-container {
-        /* margin-top: 2rem; */
-    }
-
     .keyboard-container > div > div {
         height: 4.7rem;
         width: 4.7rem;
@@ -590,10 +586,6 @@ input[type="checkbox"].toggle:focus + label::before {
         padding-block: 1.5rem;
         padding-inline: 1.5rem;
         gap: 2rem;
-    }
-
-    .keyboard-container {
-        /* margin-top: 2rem; */
     }
 }
 
