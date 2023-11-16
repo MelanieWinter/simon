@@ -1,5 +1,4 @@
 // CONSTANTS //
-
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioContext = new AudioContext()
 const gainNode = audioContext.createGain()
@@ -7,7 +6,6 @@ gainNode.connect(audioContext.destination)
 const volumeControl = document.getElementById('volumeControl')
 
 // MODEL //
-
 const keyboard = {
     q: { label: 'Q', color: 'darksalmon', tone: 100, active: false},
     w: { label: 'W', color: 'bisque', tone: 110, active: false },
@@ -92,7 +90,6 @@ const resetHighScoresButton = document.getElementById('resetHighScoresButton')
 const soundToggle = document.getElementById('check')
 
 // EVENT LISTENERS //
-
 startButton.addEventListener('click', () => {
     handleStartButton()
     setTimeout(leveler, 500)
@@ -212,7 +209,6 @@ resetHighScoresButton.addEventListener('click', resetHighScores)
 soundToggle.addEventListener('click', toggleSound)
 
 // VIEW //
-
 function handleKeyColor(keyInfo) {
     if (keyInfo.active === true) {
         const keyEl = document.getElementById(keyInfo.label.toLowerCase())
@@ -301,7 +297,6 @@ function updateHighScoreDisplay() {
         const entry = document.createElement('div')
         entry.classList.add('high-score-entry')
         const rankContent = index === 0 ? '🏆' : `#${index + 1}`
-
         entry.innerHTML = `<span class="rank">${rankContent}</span> ${score.playerName}: Level ${score.level - 1}`
         highScoreList.appendChild(entry)
     })
@@ -309,13 +304,11 @@ function updateHighScoreDisplay() {
 
 function updateHighScore() {
     const playerName = prompt('Congratulations! You achieved a high score. Enter your name:')
-
     if (playerName) {
         const newScore = { level, playerName }
         highScores.push(newScore)
         highScores.sort((a, b) => b.level - a.level)
         highScores = highScores.slice(0, 6)
-
         localStorage.setItem('highScores', JSON.stringify(highScores))
         updateHighScoreDisplay()
     }
@@ -329,7 +322,6 @@ function render() {
 }
 
 // CONTROLLER //
-
 updateHighScoreDisplay()
 
 function handleKeyPress(event) {
