@@ -297,7 +297,6 @@ function updateHighScoreDisplay() {
         const entry = document.createElement('div')
         entry.classList.add('high-score-entry')
         const rankContent = index === 0 ? '🏆' : `#${index + 1}`
-
         entry.innerHTML = `<span class="rank">${rankContent}</span> ${score.playerName}: Level ${score.level - 1}`
         highScoreList.appendChild(entry)
     })
@@ -305,13 +304,11 @@ function updateHighScoreDisplay() {
 
 function updateHighScore() {
     const playerName = prompt('Congratulations! You achieved a high score. Enter your name:')
-
     if (playerName) {
         const newScore = { level, playerName }
         highScores.push(newScore)
         highScores.sort((a, b) => b.level - a.level)
         highScores = highScores.slice(0, 6)
-
         localStorage.setItem('highScores', JSON.stringify(highScores))
         updateHighScoreDisplay()
     }
