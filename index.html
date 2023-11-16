@@ -10,9 +10,9 @@
     <script defer src="js/script.js"></script>
     <title>Ty.Mon Says</title>
 </head>
-<body class="">
+<body>
     
-    <header class="">
+    <header>
         <h1 class="primary-logo">T Y.M O N</h1>
 
         <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only">Menu</span></button>
@@ -35,48 +35,51 @@
         </nav>
     </header>
 
-    <main>
-        <div class="popup-container hidden" id="popupContainer">
-            <div class="how-to-play-div hidden" id="howToPlayDiv">
-                <h2>How to Play</h2>
-                <p>
-                    ... Use your computer keyboard or the on-screen keys to play.
-                    <br>... Follow the computer sequence to proceed to the next level.
-                    <br>... Every level, the computer will add ONE additional key for you to repeat. 
-                    <br>... Get the highest-level and enter your name on the high scores list!
-                </p>
-            </div>
-            <div class="sfx-controls-div hidden" id="sfxControlsDiv">
-                <h2>SFX Controls</h2>
-                <p>
-                    <input type="checkbox" class="toggle" id="check">
-                    <label for="check">Toggle Sound</label>
-                </p>
-                <p class="volume">
-                    <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" class="slider"/>
-                    <label for="volumeControl">Volume</label>
-                </p>
-            </div>
-            <div class="high-score-div hidden" id="highScoreDiv">
-                <h2>High Scores</h2>
-                <div id="highScoreList"></div>
-                <button id="resetHighScoresButton" class="reset-high-scores-button">DANGER: Reset High Scores</button>
-            </div>
-            <img src="./assets/icon-close.svg" alt="close popup" class="close-popup" id="closePopup">
+    <div class="popup-container hidden" id="popupContainer">
+        <div class="how-to-play-div hidden" id="howToPlayDiv">
+            <h2>How to Play</h2>
+            <p>
+                <ol>
+                    <li>Use your computer keyboard or the on-screen keys to play.</li>
+                    <li>Follow the computer sequence to proceed to the next level.</li>
+                    <li>Every level, the computer will add ONE additional key for you to repeat. </li>
+                    <li>Get the highest-level and enter your name on the high scores list!</li>
+                </l>
+            </p>
         </div>
+        <div class="sfx-controls-div hidden" id="sfxControlsDiv">
+            <h2>SFX Controls</h2>
+            <p>
+                <input type="checkbox" class="toggle" id="check">
+                <label for="check">Toggle Sound</label>
+            </p>
+            <p class="volume">
+                <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" class="slider"/>
+                <label for="volumeControl">Volume</label>
+            </p>
+        </div>
+        <div class="high-score-div hidden" id="highScoreDiv">
+            <h2>High Scores</h2>
+            <div id="highScoreList"></div>
+            <button id="resetHighScoresButton" class="reset-high-scores-button">DANGER: Reset High Scores</button>
+        </div>
+        <img src="./assets/icon-close.svg" alt="close popup" class="close-popup" id="closePopup">
+    </div>
 
+    <main>
         <div class="message-container flex-ctr">
             <div id="message" class="message">
                 Welcome to TY.MON Says!
                 <br>Follow the sequence and see how far you can go
             </div>
-            <div id="buttonContainer" class="button-container flex-ctr">
-                <button id="startButton" class="start-button">Start Game</button>
-                <button id="levelButton" class="level-button hidden">LEVEL :  
-                    <span id="levelNumber">2</span>
-                </button>
-                <button id="resetButton" class="reset-button hidden">Restart Game</button>
-            </div>
+        </div>
+
+        <div id="buttonContainer" class="button-container flex-ctr">
+            <button id="startButton" class="start-button">Start Game</button>
+            <button id="levelButton" class="level-button hidden">LEVEL :  
+                <span id="levelNumber">2</span>
+            </button>
+            <button id="resetButton" class="reset-button hidden">Restart Game</button>
         </div>
 
         <div id="keyboardContainer" class="keyboard-container hidden">  
